@@ -153,6 +153,7 @@ class articoloValidator {
         unset($articoli_validati[0]);*/
         //foreach ($articoli_validati as $row){
         //Articolo::insert($row);}
+        
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
