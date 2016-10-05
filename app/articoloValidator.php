@@ -97,8 +97,8 @@ class articoloValidator {
             $cod=$data_row['codice'];
             echo $cod.'<br>';
 
-            $arts= Articolo::where('codice',$cod)->first();
-            //$arts= $this->articolob->where('codice',$cod)->first();
+           // $arts= Articolo::where('codice',$cod)->first();
+           $arts= $this->articolob->where('codice',$cod)->first();
 
             if(!empty($arts))
             {
