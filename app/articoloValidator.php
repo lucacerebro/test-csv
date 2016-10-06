@@ -67,6 +67,7 @@ class articoloValidator {
         $scont= Articolo_categoria_sconto::all(['id','codice']);
         $unitamisura = Unita_misura::all(['id','codice']);
         $artcs=  Articolo::all(['id','codice']);
+        $art_array=$artcs->toArray();
         
         echo memory_get_usage().'<br>';
 
@@ -98,17 +99,19 @@ class articoloValidator {
              
             $cod=$data_row['codice'];
             echo $cod.'<br>';
-            $arts= $artcs->where('codice', $cod)->first();
-                   
-           // $arts= Articolo::where('codice',$cod)->first();
+          //  $arts= $artcs->where('codice', $cod)->first();
+            //$arts= DB::table('articolo')->where('codice',$cod)->first();
+            //$arts= Articolo::where('codice',$cod)->first();
          //  $arts= $this->articolob->where('codice',$cod)->first();
-
+            $key=  array_search($cod,  array_column($art_array,'codice'));
+            echo 'Key : '.$key.'<br>';
+            //echo $art_array[$key]['id'];
             if(!empty($arts))
             {
                echo 'YES<br>';
 
-                $id=$arts['id'];
-
+                //$id=$arts['id'];
+                $id=$art_array[$key]['id'];
                     //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
                 //    $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                    //  $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
