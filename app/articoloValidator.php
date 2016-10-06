@@ -104,29 +104,29 @@ class articoloValidator {
             //$arts= Articolo::where('codice',$cod)->first();
          //  $arts= $this->articolob->where('codice',$cod)->first();
             $key=  array_search($cod,  array_column($art_array,'codice'));
-            echo 'Key : '.$key.'<br>';
+            //echo 'Key : '.$key.'<br>';
             //echo $art_array[$key]['id'];
-            if(!empty($arts))
+            if(!empty($key))
             {
                echo 'YES<br>';
 
                 //$id=$arts['id'];
                 $id=$art_array[$key]['id'];
                     //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
-                //    $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                    $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                    //  $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
-                //   $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+                   $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
                    //$data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
-                //    $data_row['unita_misura']= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+                    $data_row['unita_misura']= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
                    //$data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
-                //   $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
+                   $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
                    //$data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
-                //   $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
+                   $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
                    //$data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
                
                     array_unshift($data_row, $id);
                     //$articoli_validati[]=$data_row;
-                //    fputs($fp, implode($data_row,';')."\n");
+                    fputs($fp, implode($data_row,';')."\n");
                     $counter++;
                
             }
@@ -135,7 +135,7 @@ class articoloValidator {
                 $id='';
                 array_unshift($data_row, $id);
                 //$articoli_validati[]=$data_row;
-                //fputs($fp, implode($data_row,';')."\n");
+                fputs($fp, implode($data_row,';')."\n");
 
 
                 }
@@ -163,7 +163,7 @@ class articoloValidator {
         echo memory_get_usage().'<br>';
         //DB::getPdo()->exec($query);
         //OPPURE -> 
-        //DB::connection()->getPdo()->exec($query);
+        DB::connection()->getPdo()->exec($query);
         /*$newindex='id';
         $articoli_validati[$newindex]=$articoli_validati[0];
         unset($articoli_validati[0]);*/
