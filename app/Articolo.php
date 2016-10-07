@@ -14,7 +14,7 @@ class Articolo extends Model
         return $this->belongsTo('App\Codice_iva','iva');
     }
     
-    public function aspetto(){
+    public function aspetto_bene(){
         return $this->belongsTo('App\Aspetto_bene','aspetto_bene');
     }
     

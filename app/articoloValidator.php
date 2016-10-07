@@ -113,7 +113,8 @@ class articoloValidator {
             //echo implode($var,';').'<br>';
             //$arts= $artcs->where('codice', $cod)->first();
             //$arts= DB::table('articolo')->where('codice',$cod)->first();
-            $arts= Articolo::where('codice',$cod)->first();
+            //$arts= Articolo::where('codice',$cod)->first();
+            $arts=  Articolo::firstOrNew(['codice'=>$cod]);
             //$arts= $this->articolob->where('codice',$cod)->first();
             //$key=  array_search($cod,  array_column($art_array,'codice'));
             //$key=  array_search($cod,  $column_cod);
@@ -125,15 +126,16 @@ class articoloValidator {
                 $id=$arts['id'];
                 //echo $id=$artcs_array[$key]['id'];
                 //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
-                $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                $arts['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                
                 //  $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
-                $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+                $arts['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
                 //$data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
-                $data_row['unita_misura']= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+                $arts['unita_misura']= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
                 //$data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
-                $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
+                $arts['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
                 //$data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
-                $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
+                $arts['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
                 //$data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
                
                     array_unshift($data_row, $id);
@@ -158,12 +160,14 @@ class articoloValidator {
             }
 
         }
-          echo 'Inizio Scrittura file ';
+        
+        echo 'Inizio Scrittura file ';
         echo date("H:i:s").'<br>';
+        
         //$file_name=$csv_file_name;
         //$fp = fopen(__DIR__.'/../storage/imports/'.$file_name, 'w');
 
-       /* foreach ($articoli_validati as $fields) {
+        /* foreach ($articoli_validati as $fields) {
             //scrive sul file i ogni campo di ogni riga delimitandoli con ';'
             fputs($fp, implode($fields,';')."\n");
             $counter++;
@@ -179,7 +183,8 @@ class articoloValidator {
         echo memory_get_usage().'<br>';
         //DB::getPdo()->exec($query);
         //OPPURE -> 
-        DB::connection()->getPdo()->exec($query);
+       // DB::connection()->getPdo()->exec($query);
+        $arts->save();
         /*$newindex='id';
         $articoli_validati[$newindex]=$articoli_validati[0];
         unset($articoli_validati[0]);*/
