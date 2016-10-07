@@ -124,7 +124,7 @@ class articoloValidator {
                echo 'YES<br>';
 
                 $id=$arts['id'];
-                //echo $id=$artcs_array[$key]['id'];
+                echo $id.'<br>';
                 //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
                 $arts['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                 
@@ -147,16 +147,32 @@ class articoloValidator {
             else{
                 echo 'NO<br>';
                 $id='';
-                array_unshift($data_row, $id);
-                $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                //array_unshift($data_row, $id);
+                $arts['id']=$id;
+                
+                //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
+                $arts['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                
+                //  $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
+                $arts['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+                //$data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
+                $arts['unita_misura']= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+                //$data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
+                $arts['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
+                //$data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
+                $arts['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
+                //$data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']); 
+               /* $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                 $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
                 $data_row['unita_misura']= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
                 $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
-                $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
+                $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;*/
  //               fputs($fp, implode($data_row,';')."\n");
 
 
                 }
+                        $arts->save();
+
             }
 
         }
@@ -184,7 +200,7 @@ class articoloValidator {
         //DB::getPdo()->exec($query);
         //OPPURE -> 
        // DB::connection()->getPdo()->exec($query);
-        $arts->save();
+        
         
         /*$newindex='id';
         $articoli_validati[$newindex]=$articoli_validati[0];
