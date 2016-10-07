@@ -93,7 +93,7 @@ class articoloValidator {
         $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> 0]);
         $file_name=$csv_file_name;
-        $fp = fopen(__DIR__.'/../storage/imports/'.$file_name, 'w');
+//        $fp = fopen(__DIR__.'/../storage/imports/'.$file_name, 'w');
         while(!feof($opened_file))
         {
         $data_rows = fgetcsv($opened_file, 0, ';');
@@ -140,7 +140,7 @@ class articoloValidator {
                
                     array_unshift($data_row, $id);
                     //$articoli_validati[]=$data_row;
-                    fputs($fp, implode($data_row,';')."\n");
+ //                   fputs($fp, implode($data_row,';')."\n");
                     $counter++;
                
             }
@@ -153,7 +153,7 @@ class articoloValidator {
                 $data_row['unita_misura']= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
                 $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
                 $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
-                fputs($fp, implode($data_row,';')."\n");
+ //               fputs($fp, implode($data_row,';')."\n");
 
 
                 }
@@ -173,7 +173,7 @@ class articoloValidator {
             $counter++;
         }*/
  
-        fclose($fp);
+ //       fclose($fp);
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'processato','row_count'=> $counter]);
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
