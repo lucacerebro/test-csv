@@ -75,7 +75,7 @@ class articoloValidator {
         $cod_array=$artcs_cod->toArray();
     * 
     */
-        $artcs_array=$artcs->toArray();
+       // $artcs_array=$artcs->toArray();
         //foreach ($artcs_array as $cd) echo implode($cd).'<br>';
         //echo '<br> -> '.$artcs_array[0]['id']['codice'].'<br>';
         echo memory_get_usage().'<br>';
@@ -108,24 +108,25 @@ class articoloValidator {
              
             $cod=$data_row['codice'];
             echo $cod.'<br>';
-            $key= $this->searchCode($cod,$artcs_array);
+            //$key= $this->searchCode($cod,$artcs_array);
+           
 
            //$column_cod=$this->a_column->ar_column($artcs_array,'codice');
           //  echo implode($var,';').'<br>';
           //  $arts= $artcs->where('codice', $cod)->first();
             //$arts= DB::table('articolo')->where('codice',$cod)->first();
-            //$arts= Articolo::where('codice',$cod)->first();
+            $arts= Articolo::where('codice',$cod)->first();
          //  $arts= $this->articolob->where('codice',$cod)->first();
            // $key=  array_search($cod,  array_column($art_array,'codice'));
             //$key=  array_search($cod,  $column_cod);
           
-            echo 'Key : '.$key.'<br>';
-            if(!empty($key))
+            //echo 'Key : '.$key.'<br>';
+            if(!empty($arts))
             {
                echo 'YES<br>';
 
-                //$id=$arts['id'];
-                echo $id=$artcs_array[$key]['id'];
+                $id=$arts['id'];
+                //echo $id=$artcs_array[$key]['id'];
                 //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
                 $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                 //  $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
@@ -194,12 +195,13 @@ class articoloValidator {
         //return $vld_error;
       }
       
-      private function searchCode($cod, $artcs_array){
+      /*private function searchCode($cod, $artcs_array){
         foreach ($artcs_array as $key => $val)
             {
                 if ($val['codice']=== $cod)
                     return $key;
             }
             return null;
-      }
+      }*/
+      
 }
