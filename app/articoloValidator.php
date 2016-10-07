@@ -69,19 +69,19 @@ class articoloValidator {
         $unitamisura = Unita_misura::all(['id','codice']);
         $artcs=  Articolo::all(['id','codice']);
         //$art_array=$artcs->toArray();
-   /*     $artcs_id= Articolo::all(['id']);
+        /*$artcs_id= Articolo::all(['id']);
         $artcs_cod= Articolo::all(['codice']);
         $id_array=$artcs_id->toArray();
         $cod_array=$artcs_cod->toArray();
-    * 
-    */
-       // $artcs_array=$artcs->toArray();
+        * 
+        */
+        // $artcs_array=$artcs->toArray();
         //foreach ($artcs_array as $cd) echo implode($cd).'<br>';
         //echo '<br> -> '.$artcs_array[0]['id']['codice'].'<br>';
         echo memory_get_usage().'<br>';
 
         ini_set("auto_detect_line_endings", true);
-        $articoli_validati= array();
+        //$articoli_validati= array();
         $csv_file_name=$csv_file_path->getClientOriginalName();
         if (($opened_file = fopen($csv_file_path, 'r')) === false) {
             throw new Exception('File cannot be opened for reading');
@@ -102,24 +102,21 @@ class articoloValidator {
         $vld= $this->validator->make($data_row, $this->rules, $this->messages);
         if ($vld->fails()){
             echo $vld->errors().'<br>';
-            fputs($fp_error, $data_row['codice'].' '.$vld->errors()."\n");           
+            fputs($fp_error, 'Codice: '.$data_row['codice'].' '.$vld->errors()."\n");           
         }
         else {
              
             $cod=$data_row['codice'];
             echo $cod.'<br>';
             //$key= $this->searchCode($cod,$artcs_array);
-           
-
-           //$column_cod=$this->a_column->ar_column($artcs_array,'codice');
-          //  echo implode($var,';').'<br>';
-          //  $arts= $artcs->where('codice', $cod)->first();
+            //$column_cod=$this->a_column->ar_column($artcs_array,'codice');
+            //echo implode($var,';').'<br>';
+            //$arts= $artcs->where('codice', $cod)->first();
             //$arts= DB::table('articolo')->where('codice',$cod)->first();
             $arts= Articolo::where('codice',$cod)->first();
-         //  $arts= $this->articolob->where('codice',$cod)->first();
-           // $key=  array_search($cod,  array_column($art_array,'codice'));
+            //$arts= $this->articolob->where('codice',$cod)->first();
+            //$key=  array_search($cod,  array_column($art_array,'codice'));
             //$key=  array_search($cod,  $column_cod);
-          
             //echo 'Key : '.$key.'<br>';
             if(!empty($arts))
             {
@@ -149,7 +146,11 @@ class articoloValidator {
                 echo 'NO<br>';
                 $id='';
                 array_unshift($data_row, $id);
-                //$articoli_validati[]=$data_row;
+                $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+                $data_row['unita_misura']= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+                $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
+                $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
                 fputs($fp, implode($data_row,';')."\n");
 
 
