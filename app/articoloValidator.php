@@ -179,12 +179,13 @@ class articoloValidator {
         echo date("H:i:s").'<br>';
         $path=__DIR__.'/../storage/imports/'. $file_name ;
         echo $file_name.'<br>';
-        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
+       // $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
         echo memory_get_usage().'<br>';
         //DB::getPdo()->exec($query);
         //OPPURE -> 
        // DB::connection()->getPdo()->exec($query);
         $arts->save();
+        
         /*$newindex='id';
         $articoli_validati[$newindex]=$articoli_validati[0];
         unset($articoli_validati[0]);*/
@@ -193,7 +194,8 @@ class articoloValidator {
         
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
-        echo 'Fine Scrittura DB ';
+        //echo 'Fine Scrittura DB ';
+        echo 'Scrittura con model completata<br>';
         echo date("H:i:s").'<br>';
 
         echo 'Fine';
