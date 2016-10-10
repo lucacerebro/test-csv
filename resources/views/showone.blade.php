@@ -69,7 +69,7 @@ th, td {
         
         
         <div class="container" style="margin-top: 10px;">
-        <a href="{{ url()->previous() }}"><button class="btn btn-success">Back</button></a>
+        <a href="{{ URL::previous() }}"><button class="btn btn-success">Back</button></a>
         <a href="{{ URL::to('import') }}"><button class="btn btn-success">HOme</button></a>
         </div>
         
