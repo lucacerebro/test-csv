@@ -165,7 +165,7 @@ class articoloValidator {
                 $arts->descrizione_agg = $data_row['descrizione_agg'];
                 $arts->data_scadenza = $data_row['data_scadenza'];
 */                
-                array_unshift($data_row, $id);
+    //            array_unshift($data_row, $id);
                     //$articoli_validati[]=$data_row;
  //                   fputs($fp, implode($data_row,';')."\n");
                     $counter++;
