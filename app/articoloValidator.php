@@ -127,11 +127,11 @@ class articoloValidator {
 
                 //echo $id.'<br>';$id=$arts['id'];
                 //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
-                $arts->iva=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                //$arts->iva=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                 $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                 //  $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
                 
-                $arts->aspetto_bene= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+                //$arts->aspetto_bene= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
                 $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
                 //$data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
 
