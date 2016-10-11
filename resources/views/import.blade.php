@@ -18,9 +18,7 @@
     </nav>
      <div class="container">
 	 
-                <h3>
-				On Server (local)
-				Visualizza tutti gli Articoli</h3>
+                <h3>Visualizza tutti gli Articoli presenti nel DB</h3>
                 <a href="/show"><button class="btn btn-success">Visualizza</button></a>
                 @if(Session::has('message'))
                 <hr/>
@@ -38,21 +36,23 @@
     </div>
     
     <div class="container">
-                <h3>Caricamento CSV Articoli con Query(LOAD DATA LOCAL INFILE) (tabella articolo)</h3>
+                <h3>Caricamento File CSV Articoli (in tabella articolo)</h3>
                 <div style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px; width: auto">
                
                 <form action="{{ URL::to('import_csv') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
 		<input type="file" name="import_csv" value=" {{ csrf_token() }}" >
 		<button class="btn btn-primary">Validazione File</button>
-                <div> Validate2 </div>
+                <div> Validazione File </div>
 		</form>
 
                 </div>
 
                 <p style="margin-top: 15px;">
-                <a href="{{ URL::to('#') }}"><button class="btn btn-success">Download Excel xls</button></a>
-		<a href="{{ URL::to('#') }}"><button class="btn btn-success">Download Excel xlsx</button></a>
-		<a href="{{ URL::to('#') }}"><button class="btn btn-success">Download CSV</button></a>
+                            <!-- Styles -->
+
+                <!--  <a href="{{ URL::to('#') }}"><button class="btn btn-success">Download Excel xls</button></a>-->
+		<!--  <a href="{{ URL::to('#') }}"><button class="btn btn-success">Download Excel xlsx</button></a>-->
+		<a href="{{ URL::to('downloadExcel/csv') }}"><button class="btn btn-success">Download CSV</button></a>
                 <span style="margin-left: 10px;">
                 <a href="{{ URL::to('import') }}"><button class="btn btn-success" >Home</button></a>
                 </span>

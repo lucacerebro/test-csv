@@ -29,6 +29,7 @@ class articoloValidator {
         'descrizione'=> 'required',
         //verifica che 'iva' sia presente nella tabella 'codice_iva' campo 'codice'
         'iva' => 'required|exists:codice_iva,codice' ,
+        //'id_padre' => 'exists',
         'unita_misura' => 'required|exists:unita_misura,codice',
         'qta_min'=> 'required',
         'is_kit'=> 'required',
@@ -46,6 +47,7 @@ class articoloValidator {
 
         'codice.required' => 'Codice obbligatorio',
         'iva.required'=> 'Iva obbligatoria',
+        //'id_padre.exists'=> 'codice id_padre non esistente'
         'iva.exists'=> 'Codice iva non presente nella tabella',
         'aspetto_bene.exists'=>'Codice aspetto bene non presente nella tabella',
         'unita_misura.exists'=>'Codice unita_misura non presente nella tabella',
@@ -245,7 +247,7 @@ class articoloValidator {
         echo date("H:i:s").'<br>';
 
         echo 'Fine';
-        //return $this->validator;
+        return $this->validator;
         //return $vld_error;
       }      
 }
