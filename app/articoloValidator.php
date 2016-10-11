@@ -107,7 +107,7 @@ class articoloValidator {
         else {
              
             $cod=$data_row['codice'];
-            echo $cod.'<br>';
+            //echo $cod.'<br>';
             //$key= $this->searchCode($cod,$artcs_array);
             //$column_cod=$this->a_column->ar_column($artcs_array,'codice');
             //echo implode($var,';').'<br>';
@@ -121,7 +121,7 @@ class articoloValidator {
             //echo 'Key : '.$key.'<br>';
             if(!empty($arts))
             {
-               echo 'YES<br>';
+              // echo 'YES<br>';
 
                 //$id=$arts['id'];
               
