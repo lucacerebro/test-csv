@@ -51,7 +51,7 @@ class ImportazioneCsvController extends Controller
     
     public function show()
             { 
-            $arts= Articolo::where('id','>',0)->paginate(5);
+            $arts= Articolo::where('id','>',0)->paginate(10);
             return view('show', ['arts' => $arts]);
             }
             

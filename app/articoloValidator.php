@@ -225,24 +225,18 @@ class articoloValidator {
             $counter++;
         }*/
  
- //       fclose($fp);
+        //       fclose($fp);
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'processato','row_count'=> $counter]);
         //echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
         $path=__DIR__.'/../storage/imports/'. $file_name ;
         echo $file_name.'<br>';
-       // $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
         echo memory_get_usage().'<br>';
+       
+        // $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
         //DB::getPdo()->exec($query);
         //OPPURE -> 
-       // DB::connection()->getPdo()->exec($query);
-        
-        
-        /*$newindex='id';
-        $articoli_validati[$newindex]=$articoli_validati[0];
-        unset($articoli_validati[0]);*/
-        //foreach ($articoli_validati as $row){
-        //Articolo::insert($row);}
+        // DB::connection()->getPdo()->exec($query);
         
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
@@ -253,15 +247,5 @@ class articoloValidator {
         echo 'Fine';
         //return $this->validator;
         //return $vld_error;
-      }
-      
-      /*private function searchCode($cod, $artcs_array){
-        foreach ($artcs_array as $key => $val)
-            {
-                if ($val['codice']=== $cod)
-                    return $key;
-            }
-            return null;
-      }*/
-      
+      }      
 }
