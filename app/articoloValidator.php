@@ -123,8 +123,10 @@ class articoloValidator {
             {
                echo 'YES<br>';
 
+                $arts->fill($data_row);
                 $id=$arts['id'];
-                //echo $id.'<br>';
+
+                //echo $id.'<br>';$id=$arts['id'];
                 //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
                 $arts->iva=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                 
