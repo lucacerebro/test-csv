@@ -136,8 +136,25 @@ class articoloValidator {
                 $arts['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
                 //$data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
                 $arts['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
-                //$data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
-               
+                //$data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
+
+
+                $arts['descrizione']=$data_row['descrizione'];
+                $arts['codice_alt'] = $data_row['codice_alt'];
+                $arts['codice_barre'] = $data_row['codice_barre'];
+                $arts['id_padre'] = $data_row['id_padre'];
+                $arts['qta_min'] = $data_row['qta_min'];
+                $arts['nota'] = $data_row['nota'];
+                $arts['is_kit'] = $data_row['is_kit'];
+                $arts['is_novita'] = $data_row['is_novita'];
+                $arts['is_vincolante'] = $data_row['is_vincolante'];
+                $arts['is_online'] = $data_row['is_online'];
+                $arts['url_img'] = $data_row['url_img'];
+                $arts['color'] = $data_row['color'];
+                $arts['pezzi_confezione'] = $data_row['pezzi_confezione'];
+                $arts['descrizione_agg'] = $data_row['descrizione_agg'];
+                $arts['data_scadenza'] = $data_row['data_scadenza'];
+                
                     array_unshift($data_row, $id);
                     //$articoli_validati[]=$data_row;
  //                   fputs($fp, implode($data_row,';')."\n");
