@@ -17,7 +17,6 @@ use App\Articolo;
 use App\Csv_importati;
 use Illuminate\Validation\Factory as ValidationFactory;
 use DB;
-use App\a_column;
 
 class articoloValidator {
     private $validator;
