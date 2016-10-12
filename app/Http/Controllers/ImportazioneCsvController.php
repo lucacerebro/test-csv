@@ -62,6 +62,7 @@ class ImportazioneCsvController extends Controller
             return view('showone',['art' => $art]);
             }
     public function downloadExcel($type){
+        echo 'in function downloadexcel';
         ini_set('max_execution_time', 600);
         $data = Articolo::get()->toArray();
 	return Excel::create('articoli_presenti', function($excel) use ($data) {
