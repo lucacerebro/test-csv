@@ -122,6 +122,7 @@ class articoloValidator {
             if(!empty($arts))
             {
                echo 'YES<br>';
+               
 
                 //$id=$arts['id'];
 
