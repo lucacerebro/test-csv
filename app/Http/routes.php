@@ -38,3 +38,6 @@ Route::post('import_csv2','ImportazioneCsvController@store2');
 Route::get('show','ImportazioneCsvController@show');
 
 Route::get('showone/{id}', 'ImportazioneCsvController@showOne');
+
+Route::get('downloadExcel/{type}', 'ImportazioneCsvController@downloadExcel');
+

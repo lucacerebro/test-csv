@@ -17,7 +17,6 @@ use App\Articolo;
 use App\Csv_importati;
 use Illuminate\Validation\Factory as ValidationFactory;
 use DB;
-use App\a_column;
 
 class articoloValidator {
     private $validator;
@@ -29,6 +28,7 @@ class articoloValidator {
         'descrizione'=> 'required',
         //verifica che 'iva' sia presente nella tabella 'codice_iva' campo 'codice'
         'iva' => 'required|exists:codice_iva,codice' ,
+        //'id_padre' => 'exists',
         'unita_misura' => 'required|exists:unita_misura,codice',
         'qta_min'=> 'required',
         'is_kit'=> 'required',
@@ -46,6 +46,7 @@ class articoloValidator {
 
         'codice.required' => 'Codice obbligatorio',
         'iva.required'=> 'Iva obbligatoria',
+        //'id_padre.exists'=> 'codice id_padre non esistente'
         'iva.exists'=> 'Codice iva non presente nella tabella',
         'aspetto_bene.exists'=>'Codice aspetto bene non presente nella tabella',
         'unita_misura.exists'=>'Codice unita_misura non presente nella tabella',
@@ -87,6 +88,7 @@ class articoloValidator {
             throw new Exception('File cannot be opened for reading');
         }
         $header = fgetcsv($opened_file, 0, ';');
+        $h= count($header);
         echo 'Lettura Header ';        
         echo date("H:i:s").'<br>';
         $counter=0;
@@ -97,7 +99,9 @@ class articoloValidator {
         while(!feof($opened_file))
         {
         $data_rows = fgetcsv($opened_file, 0, ';');
-        
+        $n= count($data_rows);
+        if($h==$n){
+
         $data_row = array_combine($header, $data_rows);
         $vld= $this->validator->make($data_row, $this->rules, $this->messages);
         if ($vld->fails()){
@@ -107,7 +111,7 @@ class articoloValidator {
         else {
              
             $cod=$data_row['codice'];
-            echo $cod.'<br>';
+            //echo $cod.'<br>';
             //$key= $this->searchCode($cod,$artcs_array);
             //$column_cod=$this->a_column->ar_column($artcs_array,'codice');
             //echo implode($var,';').'<br>';
@@ -121,26 +125,30 @@ class articoloValidator {
             //echo 'Key : '.$key.'<br>';
             if(!empty($arts))
             {
+<<<<<<< HEAD
                echo 'YES<br>';
                
+=======
+              // echo 'YES<br>';
+>>>>>>> 512cd6ac1ebef758a0d1c6c60142e4b13a130bb7
 
                 //$id=$arts['id'];
-
+              
                 //echo $id.'<br>';$id=$arts['id'];
                 //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
-                //$arts->iva=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                // $arts->iva=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                 $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
                 //  $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
                 
-                //$arts->aspetto_bene= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+                //  $arts->aspetto_bene= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
                 $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
                 //$data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
 
-                //$arts->unita_misura= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+                //  $arts->unita_misura= $unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
                 $data_row['unita_misura']=$unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
                 //$data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
                 
-                //$arts->sconto= $scont->where('codice',$data_row['sconto'])->first()->id;
+                // $arts->sconto= $scont->where('codice',$data_row['sconto'])->first()->id;
                 $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
                 //$data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
                 
@@ -169,7 +177,7 @@ class articoloValidator {
     //            array_unshift($data_row, $id);
                     //$articoli_validati[]=$data_row;
  //                   fputs($fp, implode($data_row,';')."\n");
-                    $counter++;
+                $counter++;
                
             }
             
@@ -203,6 +211,11 @@ class articoloValidator {
                         $arts->save();
 
             }
+        }  
+        else
+            {
+            fputs($fp_error, 'Codice: '.$data_rows[0].' { Numero di campi errato }'."\n");           
+        }
 
         }
         
@@ -218,24 +231,18 @@ class articoloValidator {
             $counter++;
         }*/
  
- //       fclose($fp);
+        //       fclose($fp);
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'processato','row_count'=> $counter]);
         //echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
         $path=__DIR__.'/../storage/imports/'. $file_name ;
         echo $file_name.'<br>';
-       // $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
         echo memory_get_usage().'<br>';
+       
+        // $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
         //DB::getPdo()->exec($query);
         //OPPURE -> 
-       // DB::connection()->getPdo()->exec($query);
-        
-        
-        /*$newindex='id';
-        $articoli_validati[$newindex]=$articoli_validati[0];
-        unset($articoli_validati[0]);*/
-        //foreach ($articoli_validati as $row){
-        //Articolo::insert($row);}
+        // DB::connection()->getPdo()->exec($query);
         
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
@@ -244,17 +251,7 @@ class articoloValidator {
         echo date("H:i:s").'<br>';
 
         echo 'Fine';
-        //return $this->validator;
+        return $this->validator;
         //return $vld_error;
-      }
-      
-      /*private function searchCode($cod, $artcs_array){
-        foreach ($artcs_array as $key => $val)
-            {
-                if ($val['codice']=== $cod)
-                    return $key;
-            }
-            return null;
-      }*/
-      
+      }      
 }
