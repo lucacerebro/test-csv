@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Redirect;
 use App\articoloValidator;
 use App\Articolo;
-use Excel;
+//use Excel;
 
 class ImportazioneCsvController extends Controller
 {
@@ -61,7 +61,7 @@ class ImportazioneCsvController extends Controller
             $art= Articolo::find($id);
             return view('showone',['art' => $art]);
             }
-    public function downloadExcel($type){
+/*    public function downloadExcel($type){
         ini_set('max_execution_time', 600);
         $data = Articolo::get()->toArray();
 	return Excel::create('articoli_presenti', function($excel) use ($data) {
@@ -70,5 +70,5 @@ class ImportazioneCsvController extends Controller
 		$sheet->fromArray($data);
             });
 	})->download($type);
-    }
+    } */
 }
