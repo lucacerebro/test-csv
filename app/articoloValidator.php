@@ -125,12 +125,9 @@ class articoloValidator {
             //echo 'Key : '.$key.'<br>';
             if(!empty($arts))
             {
-<<<<<<< HEAD
+
                echo 'YES<br>';
                
-=======
-              // echo 'YES<br>';
->>>>>>> 512cd6ac1ebef758a0d1c6c60142e4b13a130bb7
 
                 //$id=$arts['id'];
               
