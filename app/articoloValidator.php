@@ -207,14 +207,14 @@ class articoloValidator {
                 }*/
                         $arts->save();
 
-            }
-        }  
+            } // fine if Validate fail
+        } //if ($h==$n)  
         else
             {
             fputs($fp_error, 'Codice: '.$data_rows[0].' { Numero di campi errato }'."\n");           
         }
 
-        }
+        } //fine while lettura file import
         
         echo 'Inizio Scrittura file ';
         echo date("H:i:s").'<br>';
