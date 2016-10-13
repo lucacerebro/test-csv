@@ -150,7 +150,7 @@ class articoloValidator {
                 //$arts->provv = $provv->where('codice',$data_row['provv'])->first()->id;
                 $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
                 //$data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
-             //   $arts->fill($data_row);
+                $arts->fill($data_row);
 
 /*
                 $arts->descrizione=$data_row['descrizione'];
@@ -203,7 +203,7 @@ class articoloValidator {
 
 
                 }*/
-            //            $arts->save();
+                        $arts->save();
 
             }
         }  
