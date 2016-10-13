@@ -9,3 +9,4 @@ database/migrations/2016_10_04_085626_create_table_Cliente.php
 database/migrations/2016_10_11_104402_Categoria.php
 nbproject/project.properties
 nbproject/project.xml
+composer.lock
