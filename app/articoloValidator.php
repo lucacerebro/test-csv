@@ -88,7 +88,7 @@ class articoloValidator {
             throw new Exception('File cannot be opened for reading');
         }
         $header = fgetcsv($opened_file, 0, ';');
-        $h= count($header);
+//        $h= count($header);
         echo 'Lettura Header ';        
         echo date("H:i:s").'<br>';
         $counter=0;
@@ -99,8 +99,8 @@ class articoloValidator {
         while(!feof($opened_file))
         {
         $data_rows = fgetcsv($opened_file, 0, ';');
-        $n= count($data_rows);
-        if($h==$n){
+//        $n= count($data_rows);
+//        if($h==$n){
 
         $data_row = array_combine($header, $data_rows);
         $vld= $this->validator->make($data_row, $this->rules, $this->messages);
@@ -208,11 +208,11 @@ class articoloValidator {
                         //$arts->save();
 
             } // fine if Validate fail
-        } //if ($h==$n)  
-        else
+//        } //if ($h==$n)  
+/*        else 
             {
             fputs($fp_error, 'Codice: '.$data_rows[0].' { Numero di campi errato }'."\n");           
-        }
+        }*/
 
         } //fine while lettura file import
         
