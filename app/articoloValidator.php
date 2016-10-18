@@ -154,7 +154,7 @@ class articoloValidator {
                 //$data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
               //  $arts->fill($data_row)->save();
                 //echo implode($data_row, ';').'<br>';
-                $arts->save($data_row);
+                $arts->update($data_row);
 /*
                 $arts->descrizione=$data_row['descrizione'];
                 $arts->codice_alt = $data_row['codice_alt'];
