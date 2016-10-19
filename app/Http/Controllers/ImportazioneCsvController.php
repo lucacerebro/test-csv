@@ -50,6 +50,74 @@ class ImportazioneCsvController extends Controller
        echo '<br>Fine ImportazioneCsvController';
     }
     
+        
+    public function store2(){
+        echo 'Start ImportazioneCsvController<br>';
+        echo 'time: '.ini_get('max_execution_time').'<br>';
+        echo 'size: '.ini_get('upload_max_filesize').'<br>';
+        echo 'init_set(max_execution_time, 500): '. ini_set('max_execution_time', 600).'<br>';
+        echo 'init_set(upload_max_filesize, 5): '. ini_set('upload_max_filesize', '5M').'<br>';
+        echo 'time: '.ini_get('max_execution_time').'<br>';
+        echo 'size: '.ini_get('upload_max_filesize').'<br>';
+        if(Input::hasFile('import_csv')){
+            $csv_file = Input::file('import_csv');
+            $csv_path = Input::file('import_csv')->getRealPath().'<br>';
+            if(($csv_file->getClientOriginalExtension()) == 'csv'){
+                if($csv_file->isValid()){
+                    $validator = $this->art_validator->validate2($csv_file);
+                        if (!$validator)  {
+                        echo '<br>Attenzione: sono presenti errori nel csv';
+                    }           
+                }
+            }
+            else{
+               return Redirect::back()->with('message', 'File non valido: inserire un file CSV da importare!');
+            }
+        }
+        else {
+
+            $message = 'Seleziona un file da validare!';
+            return Redirect::back()->with('message', $message);
+        }
+       //return Redirect::to('error')->withErrors($validator);
+       //return Redirect::back()->withErrors($validator);
+       echo '<br>Fine ImportazioneCsvController';
+    }
+
+    public function store3(){
+        echo 'Start ImportazioneCsvController<br>';
+        echo 'time: '.ini_get('max_execution_time').'<br>';
+        echo 'size: '.ini_get('upload_max_filesize').'<br>';
+        echo 'init_set(max_execution_time, 500): '. ini_set('max_execution_time', 600).'<br>';
+        echo 'init_set(upload_max_filesize, 5): '. ini_set('upload_max_filesize', '5M').'<br>';
+        // ini_set('upload_max_filesize', '5M') non funziona, si imposta in .htaccess in /public la riga di comando: php_value upload_max_filesize 5M
+        echo 'time: '.ini_get('max_execution_time').'<br>';
+        echo 'size: '.ini_get('upload_max_filesize').'<br>';
+        if(Input::hasFile('import_csv')){
+            $csv_file = Input::file('import_csv');
+            $csv_path = Input::file('import_csv')->getRealPath();
+            if(($csv_file->getClientOriginalExtension()) == 'csv'){
+                if($csv_file->isValid()){
+                    $validator = $this->art_validator->validate3($csv_path);
+                        if (!$validator)  {
+                        echo '<br>Attenzione: sono presenti errori nel csv';
+                    }           
+                }
+            }
+            else{
+               return Redirect::back()->with('message', 'File non valido: inserire un file CSV da importare!');
+            }
+        }
+        else {
+
+            $message = 'Seleziona un file da validare!';
+            return Redirect::back()->with('message', $message);
+        }
+       //return Redirect::to('error')->withErrors($validator);
+       //return Redirect::back()->withErrors($validator);
+       echo '<br>Fine ImportazioneCsvController';
+    }
+    
     public function show()
             { 
             $arts= Articolo::where('id','>',0)->paginate(10);
