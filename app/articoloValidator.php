@@ -154,8 +154,8 @@ class articoloValidator {
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'processato','row_count'=> $counter]);
         //echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
-//        $path=__DIR__.'/../storage/imports/'. $file_name ;
-        $path=__DIR__.'/../storage/logs/'. $file_name ;
+        $path=__DIR__.'/../storage/imports/'. $file_name ;
+//        $path=__DIR__.'/../storage/logs/'. $file_name ;
         echo $file_name.'<br>';
         echo memory_get_usage().'<br>';
        
@@ -185,8 +185,8 @@ class articoloValidator {
 
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
-//        $path=__DIR__.'/../storage/imports/'. $file_name ;
-        $path=__DIR__.'/../storage/logs/'. $file_name ;
+       $path=__DIR__.'/../storage/imports/'. $file_name ;
+//     $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
         $this->resetDB($name_tab);
         $this->writeDb($name_tab, $path);
@@ -256,8 +256,8 @@ class articoloValidator {
     
     public function write_file($articoli_validati,$file_name){
         $counter=0;
-//      $fp = fopen(__DIR__.'/../storage/imports/'.$file_name, 'w');
-        $fp = fopen(__DIR__.'/../storage/logs/'.$file_name, 'w');
+        $fp = fopen(__DIR__.'/../storage/imports/'.$file_name, 'w');
+//      $fp = fopen(__DIR__.'/../storage/logs/'.$file_name, 'w');
         foreach ($articoli_validati as $fields) {
             //scrive sul file i ogni campo di ogni riga delimitandoli con ';'
             fputs($fp, implode($fields,';')."\n");
@@ -289,8 +289,8 @@ class articoloValidator {
         echo 'Lettura Header ';        
         echo date("H:i:s").'<br>';
         $counter=0;
-//        $fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
-        $fp = fopen(__DIR__.'/../storage/logs/'.$csv_file_name, 'w');
+        $fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
+//      $fp = fopen(__DIR__.'/../storage/logs/'.$csv_file_name, 'w');
         $lines = count(file($csv_file_path)) - 1; 
         $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
@@ -374,8 +374,8 @@ class articoloValidator {
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'processato','row_count'=> $counter]);
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
-//        $path=__DIR__.'/../storage/imports/'. $csv_file_name ;
-        $path=__DIR__.'/../storage/logs/'. $csv_file_name ;        
+        $path=__DIR__.'/../storage/imports/'. $csv_file_name ;
+//      $path=__DIR__.'/../storage/logs/'. $csv_file_name ;        
         echo $csv_file_name.'<br>';
         $name_tab='articolo';
         //$query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE %s FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
