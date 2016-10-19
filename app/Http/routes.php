@@ -35,6 +35,8 @@ Route::post('import_csv','ImportazioneCsvController@store');
 
 Route::post('import_csv2','ImportazioneCsvController@store2');
 
+Route::post('import_csv3','ImportazioneCsvController@store');
+
 Route::get('show','ImportazioneCsvController@show');
 
 Route::get('showone/{id}', 'ImportazioneCsvController@showOne');
