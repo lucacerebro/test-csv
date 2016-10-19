@@ -272,11 +272,11 @@ class articoloValidator {
          public function validate3($csv_file_path){
         echo memory_get_usage().'<br>';
         //$art=  Articolo::all('id','codice');
-        $codici_iva=  Codice_iva::all('id','codice');
-        $aspettobene= Aspetto_bene::all('id','codice');
-        $provv= Articolo_categoria_provv::all('id','codice');
-        $scont= Articolo_categoria_sconto::all('id','codice');
-        $unitamisura = Unita_misura::all('id','codice');
+        $codici_iva=  Codice_iva::all(['id','codice']);
+        $aspettobene= Aspetto_bene::all(['id','codice']);
+        $provv= Articolo_categoria_provv::all(['id','codice']);
+        $scont= Articolo_categoria_sconto::all(['id','codice']);
+        $unitamisura = Unita_misura::all(['id','codice']);
         echo memory_get_usage().'<br>';
         ini_set("auto_detect_line_endings", true);
         $articoli_validati= array();
