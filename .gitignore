@@ -2,7 +2,8 @@
 /node_modules
 .env
 /nbproject/private/
-/storage/imports/
+!/storage/imports/
+/storage/imports/*
 app/Cliente.php
 config/excel.php
 database/migrations/2016_10_04_085626_create_table_Cliente.php
