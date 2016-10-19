@@ -39,7 +39,8 @@
                 <h3>Caricamento File CSV Articoli (in tabella articolo)</h3>
                 <div style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px; width: auto">
                         
-                <form action="{{ URL::to('import_csv') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                <form style="float: left " action="{{ URL::to('import_csv') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                <h4> Aggiorna DB Vers.1 </h4>
                 <input type="file" name="import_csv" value=" {{ csrf_token() }}" >
 		<button class="btn btn-primary">Validazione File</button>
 		</form>
@@ -51,7 +52,7 @@
 		</form>
                     
                 <form action="{{ URL::to('import_csv3') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
-		<h4> Aggiorna DB Vers.2 DB </h4>
+		<h4> Aggiorna DB Vers.2 </h4>
                 <input type="file" name="import_csv" value=" {{ csrf_token() }}" >
 		<button class="btn btn-primary">Validazione File</button>
 		</form>    
