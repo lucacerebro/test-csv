@@ -305,7 +305,7 @@ class articoloValidator {
                 echo $vld->errors().'<br>';
                 fputs($fp_error, $data_row['codice'].' '.$vld->errors()."\n");
             }
-            else {
+            else { 
              
                 $cod=$data_row['codice'];
                 echo $cod.'<br>';
@@ -319,17 +319,12 @@ class articoloValidator {
                     $id=$arts['id'];
                     //echo $codici_iva->first();
                     //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
-                    $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
-                    // $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
-                    $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
-                    //$data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
-                    $data_row['unita_misura']= $unitamisura->where('codice','==',$data_row['unita_misura'])->first()->id;
-                    //$data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
-                   $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
-                    //$data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
-                    $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
-                    //$data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
-               
+                    $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
+                    $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
+                    $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
+                    $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
+                    $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
+                   
                     array_unshift($data_row, $id);
                     fputs($fp, implode($data_row,';')."\n");
                     $counter++;

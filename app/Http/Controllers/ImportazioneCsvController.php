@@ -98,7 +98,7 @@ class ImportazioneCsvController extends Controller
             $csv_path = Input::file('import_csv')->getRealPath();
             if(($csv_file->getClientOriginalExtension()) == 'csv'){
                 if($csv_file->isValid()){
-                    $validator = $this->art_validator->validate3($csv_path);
+                    $validator = $this->art_validator->validate3($csv_file);
                         if (!$validator)  {
                         echo '<br>Attenzione: sono presenti errori nel csv';
                     }           
