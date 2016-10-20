@@ -102,7 +102,7 @@ class articoloValidator {
              
             $cod=$data_row['codice'];
             //echo $cod.'<br>';
-
+            echo $cod.'<br>';
             //$arts= $artcs->where('codice', $cod)->first();
             //$arts= DB::table('articolo')->where('codice',$cod)->first();
             //$arts= Articolo::where('codice',$cod)->first();
@@ -114,7 +114,8 @@ class articoloValidator {
             {
                // $id=$artcs->where('codice',$cod)->first();
                 //echo 'id:    '.$id=$single['id'];
-                echo $id=$arts['id'];    
+                $id=$arts['id'];    
+                
                 //echo $id.'<br>';$id=$arts['id'];
                 //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
                 
