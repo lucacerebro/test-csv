@@ -126,15 +126,14 @@ class articoloValidator {
 
                 $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
 
-                $arts->update($data_row);
-
+                $arts->fill($data_row)->save();
                 $counter++;
                
             }
             
 
 
-            } // fine if Validate fail
+            } // else Validate fail
 
         } //fine while lettura file import
         
