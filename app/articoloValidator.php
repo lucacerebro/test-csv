@@ -106,15 +106,15 @@ class articoloValidator {
             //$arts= $artcs->where('codice', $cod)->first();
             //$arts= DB::table('articolo')->where('codice',$cod)->first();
             //$arts= Articolo::where('codice',$cod)->first();
-            //$arts=  Articolo::firstOrNew(['codice'=>$cod]);
+            $arts=  Articolo::firstOrNew(['codice'=>$cod]);
             //$id=$artcs->where('codice',$cod)->first()->id;
             //if(!empty($arts))
-            $single=$artcs->where('codice',$cod)->first();
-            if($single)
+            //$single=$artcs->where('codice',$cod)->first();
+            if($arts)
             {
                // $id=$artcs->where('codice',$cod)->first();
-                echo 'id:    '.$id=$single['id'];
-                //$id=$arts['id'];    
+                //echo 'id:    '.$id=$single['id'];
+                echo $id=$arts['id'];    
                 //echo $id.'<br>';$id=$arts['id'];
                 //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
                 
@@ -155,7 +155,10 @@ class articoloValidator {
              //   echo 'codice   '.$data_row['id'].'<br>';
             //    $insert[]=$data_row;
                 //$arts->save();
-                $this->articolob->where('id',$id)->update([
+             //   $this->articolob->where('id',$id)->fill($data_row)->save();
+          
+             $arts->fill($data_row)->save();
+             /*([
                             //'id' => $id,
                             'codice' => $data_row['codice'],
                             'codice_alt' =>$data_row['codice_alt'],
@@ -179,7 +182,7 @@ class articoloValidator {
                             'sconto' => $data_row['sconto'],
                             'created_at' => $data_row['created_at'],
                             'data_scadenza' => $data_row['data_scadenza'],
-                            ]);
+                            ]);*/
                 $counter++;
                
             }
