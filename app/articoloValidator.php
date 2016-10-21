@@ -270,7 +270,7 @@ class articoloValidator {
     }
     
     private function writeDb($name_tab,$path) {
-        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE %s FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE %s FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n' ", addslashes($path),$name_tab);
         DB::connection()->getPdo()->exec($query);
         return 1;
     }
