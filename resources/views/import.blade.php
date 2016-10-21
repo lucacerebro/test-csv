@@ -71,4 +71,7 @@
                 </p>
                 
     </div>
+    <div>
+        echo '<?php phpinfo(); ?>'
+    </div>
 </body>
