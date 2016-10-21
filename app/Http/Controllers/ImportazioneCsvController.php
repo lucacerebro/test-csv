@@ -120,6 +120,10 @@ class ImportazioneCsvController extends Controller
     
     public function show()
             { 
+            $output = shell_exec('mysql -V'); 
+            echo $output.'<br>';
+            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version); 
+            echo $version[0].'<br>';
             $arts= Articolo::where('id','>',0)->paginate(10);
             return view('show', ['arts' => $arts]);
             }
