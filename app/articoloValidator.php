@@ -62,7 +62,8 @@ class articoloValidator {
     }
     
     public function validate($csv_file_path){
-        
+        echo 'Version MySql:   '.$this->getMySQLVersion();
+        echo '<br>';
         echo memory_get_usage().'<br>';
         $codici_iva=  Codice_iva::all(['id','codice']);
         $aspettobene= Aspetto_bene::all(['id','codice']);
@@ -462,4 +463,11 @@ class articoloValidator {
         //return $this->validator;
         //return $vld_error;
     }
+    
+    public function getMySQLVersion() { 
+  $output = shell_exec('mysql -V'); 
+  echo $output.'<br>';
+  preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version); 
+  return $version[0]; 
+}
 }
