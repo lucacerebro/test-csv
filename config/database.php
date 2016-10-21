@@ -63,7 +63,7 @@ return [
 			'prefix'    => '',
 			'strict'    => false,
 			'options' => [ \PDO::MYSQL_ATTR_LOCAL_INFILE => true,
-                             \PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => 'client'
+                           
         ],
 		],
 
