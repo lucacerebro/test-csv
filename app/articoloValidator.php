@@ -17,7 +17,7 @@ use App\Articolo;
 use App\Csv_importati;
 use Illuminate\Validation\Factory as ValidationFactory;
 use DB;
-
+use Excel;
 
 class articoloValidator {
     private $validator;
@@ -276,9 +276,81 @@ class articoloValidator {
         DB::connection()->getPdo()->exec($query);
         return 1;
     }
+    
+    public function insertDb($path) {
+        //ini_set('mysql.allow_local_infile', 1);
+        //$query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+      //  echo $query;
+       // $path='C:\laragon\www\testcsv\storage\imports\bianchi18.csv';
+        echo $path.'<br>';
+        $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
+        $header = fgetcsv($f, 0, ';');
+        echo 'campi header :'. $h=count($header);
+         while(!feof($f))
+        {
+        $values = fgetcsv($f, 0, ';');
+        echo 'campi Values :'.$c=count($values).'   <br>';
+        if($c==$h){
+        $value = array_combine($header, $values);
+       // echo $value;
+        //Excel::('chunk')->load($path)->chunk(5000,function($data){
+                     echo '<br> load data Excel<br>';
+
+                    
+                    //foreach ($data as $key => $value){
+                 //     foreach ($data as $value){  
+
+                        $insert[] = [
+                                'id'=> $value['id'],
+                  'codice'=> $value['codice'],
+                  'id_padre' => $value['id_padre'],
+                'codice_alt' => $value['codice_alt'],
+               'codice_barre' => $value['codice_barre'],
+                 'descrizione' => $value['descrizione'],
+                  'provv' => $value['provv'],
+                   'unita_misura'=> $value['unita_misura'],
+                   'qta_min'=> $value['qta_min'],
+                    'iva'=> $value['iva'],
+                   'nota'=> $value['nota'],
+                    'aspetto_bene'=> $value['aspetto_bene'],
+                   'is_kit'=> $value['is_kit'],
+                       'is_novita'=> $value['is_novita'],
+                      'is_vincolante'=> $value['is_vincolante'],
+                       'is_online'=> $value['is_online'],
+                       'url_img'=> $value['url_img'],
+                      'color'=> $value['color'],
+                     'pezzi_confezione'=> $value['pezzi_confezione'],
+                    'descrizione_agg'=> $value['descrizione_agg'],
+                  'sconto'=> $value['sconto'],
+                   'created_at'=>$value['created_at'],
+                        'updated_at'=>$value['updated_at'],
+                'data_scadenza'=> $value['data_scadenza']
+                           
+        ];}
+        }
+                   //   }
+                        if(!empty($insert)){   
+                        foreach (array_chunk($insert,1000) as $row){
+                        echo "Ok ";
+                //        \App\Artc::insert($row);}
+                            DB::connection('mysql2')->table('articolo')->insert($row); }
+                    }
+                    //dd('Inserimento Record Completato!');
+                  //  echo $data->count();
+                // dd    ( $value->codice); 
+                            echo date("H:i:s").'<br>';
+ 
+                    return 1;
+                     }               
+                   // });
+        //DB::connection()->getPdo()->exec($query);
+  
+    //}
       
     public function resetDB($name_tab) {
-        DB::table($name_tab)->delete();
+          $pdo =  DB::connection()->getPdo();
+        $pdo->exec('truncate articolo');
+//        DB::table($name_tab)->delete();
         echo 'tabella '.$name_tab.' svuotata<br>';
         return 1;
     }
@@ -344,6 +416,13 @@ class articoloValidator {
 
          public function validate3($csv_file_path){
         echo memory_get_usage().'<br>';
+        $hostdb='localhost';
+        $userdb='root';
+        $passdb='';
+        
+       // $conn = new PDO("mysql:host=$hostdb; dbname=$namedb", $userdb, $passdb);
+        
+        
         //$art=  Articolo::all('id','codice');
         $codici_iva=  Codice_iva::all(['id','codice']);
         $aspettobene= Aspetto_bene::all(['id','codice']);
@@ -367,6 +446,8 @@ class articoloValidator {
         $lines = count(file($csv_file_path)) - 1; 
         $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
+        
+        fputs($fp, 'id;'.implode($header,';')."\n");
         while(!feof($opened_file))
         {
         $data_rows = fgetcsv($opened_file, 0, ';');
@@ -390,7 +471,7 @@ class articoloValidator {
                     echo 'YES<br>';
 
                     $id=$arts['id'];
-                    $data_row['id']=$id;
+                   // $data_row['id']=$id;
                     //echo $codici_iva->first();
                     //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
                     $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
@@ -399,10 +480,12 @@ class articoloValidator {
                     $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
                     $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
                    
-                    //array_unshift($data_row, $id);
+                    array_unshift($data_row, $id);
                     fputs($fp, implode($data_row,';')."\n");
                      //$arts->codice= $data_row['codice'];
-              $insert[]=[ 'id'=> $data_row['id'],
+                                        $insert[]=$data_row;
+
+/*              $insert[]=[ 'id'=> $data_row['id'],
                   'codice'=> $data_row['codice'],
                   'id_padre' => $data_row['id_padre'],
                 'codice_alt' => $data_row['codice_alt'],
@@ -427,6 +510,7 @@ class articoloValidator {
                         'updated_at'=>$data_row['updated_at'],
                 'data_scadenza'=> $data_row['data_scadenza']
                        ];
+  */                  
                     
                     
                     
@@ -435,8 +519,7 @@ class articoloValidator {
                     
                     
                     
-                    
-                    $insert[]=$data_row;
+                  //  $insert[]=$data_row;
                     
                     $counter++;
 
@@ -450,11 +533,13 @@ class articoloValidator {
                     $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
                     $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
                     $id='';
-                    $data_row['id']=$id;
-//                    array_unshift($data_row, $id);
+                   // $data_row['id']=$id;
+                    array_unshift($data_row, $id);
+
                     fputs($fp, implode($data_row,';')."\n");
                     /// $insert[]=$data_row;
-                    $insert[]=[ 'id'=> $data_row['id'],
+                    $insert[]=$data_row;
+                            /*[ 'id'=> $data_row['id'],
                       'codice'=> $data_row['codice'],
                   'id_padre' => $data_row['id_padre'],
                 'codice_alt' => $data_row['codice_alt'],
@@ -478,7 +563,7 @@ class articoloValidator {
                         'created_at'=>$data_row['created_at'],
                         'updated_at'=>$data_row['updated_at'],
                 'data_scadenza'=> $data_row['data_scadenza']
-                       ];
+                       ];*/
 
 
                 }
@@ -529,11 +614,23 @@ class articoloValidator {
                 foreach ($row2 as $row)
                      //DB::table('articolo')->updateOrCreate($row); 
                      $this->articolob->($row); */
-            foreach ($row2 as $row)
-            DB::table('articolo')->where('id',$row['id'])->update($row); 
-       $query = sprintf("INSERT INTO TABLE 'articolo' VALUES '%s'", implode($row,','));
-        echo $query;
-        $row=  implode($row, ',');
+           // foreach ($row2 as $row)
+           // DB::table('articolo')->where('id',$row['id'])->update($row); 
+            
+           // DB::connection()->getPdo()->exec('truncate articolo');
+           $this->resetDB('articolo');
+           //$artdelete->forceDelete();
+  //          $this->articolob->insert($row2);
+      //  $pdo2 =  DB::connection()->getPdo();
+        //$pdo2->exec($query)
+        //$this->articolob=NULL;
+       // new DB::table('articolo')->insert($row2);
+         
+    
+            //DB::table('articolo')->insert($row2); 
+       //$query = sprintf("INSERT INTO TABLE 'articolo' VALUES '%s'", implode($row,','));
+        //echo $query;
+    //    $row=  implode($row, ',');
        // DB::connection()->getPdo()->exec($query);
                             
         }
@@ -545,6 +642,7 @@ class articoloValidator {
         echo date("H:i:s").'<br>';
         echo memory_get_usage().'<br>';
         echo 'Fine';
+        
         //return $this->validator;
         //return $vld_error;
     }
