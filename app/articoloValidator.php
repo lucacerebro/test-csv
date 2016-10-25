@@ -330,10 +330,12 @@ class articoloValidator {
         }
                    //   }
                         if(!empty($insert)){   
-                        foreach (array_chunk($insert,1013) as $row){
+                        foreach (array_chunk($insert,1013,true) as $row){
                         echo "Ok !<br>";
                 //        \App\Artc::insert($row);}
-                            DB::connection('mysql2')->table('articolo')->insert($row); }
+                            DB::connection('mysql2')->table('articolo')->insert($row); 
+                            
+                        }
                     }
                     //dd('Inserimento Record Completato!');
                   //  echo $data->count();
