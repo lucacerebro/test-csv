@@ -341,7 +341,7 @@ class articoloValidator {
                   //  echo $data->count();
                 // dd    ( $value->codice); 
                             echo date("H:i:s").'<br>';
- 
+  fclose($f);
                     return 1;
                      }               
                    // });
