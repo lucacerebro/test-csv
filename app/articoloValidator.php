@@ -331,7 +331,7 @@ class articoloValidator {
                    //   }
                         if(!empty($insert)){   
                         foreach (array_chunk($insert,999) as $row){
-                        echo "Ok ";
+                        echo "Ok !<br>";
                 //        \App\Artc::insert($row);}
                             DB::connection('mysql2')->table('articolo')->insert($row); }
                     }
