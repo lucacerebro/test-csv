@@ -390,6 +390,7 @@ class articoloValidator {
                     echo 'YES<br>';
 
                     $id=$arts['id'];
+                    $data_row['id']=$id;
                     //echo $codici_iva->first();
                     //CONVERTE IL CODICE IVA IN ID DELLA TABELLA IVA
                     $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
@@ -398,8 +399,45 @@ class articoloValidator {
                     $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
                     $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
                    
-                    array_unshift($data_row, $id);
+                    //array_unshift($data_row, $id);
                     fputs($fp, implode($data_row,';')."\n");
+                     //$arts->codice= $data_row['codice'];
+              $insert[]=[ 'id'=> $data_row['id'],
+                  'codice'=> $data_row['codice'],
+                  'id_padre' => $data_row['id_padre'],
+                'codice_alt' => $data_row['codice_alt'],
+               'codice_barre' => $data_row['codice_barre'],
+                 'descrizione' => $data_row['descrizione'],
+                  'provv' => $data_row['provv'],
+                   'unita_misura'=> $data_row['unita_misura'],
+                   'qta_min'=> $data_row['qta_min'],
+                    'iva'=> $data_row['iva'],
+                   'nota'=> $data_row['nota'],
+                    'aspetto_bene'=> $data_row['aspetto_bene'],
+                   'is_kit'=> $data_row['is_kit'],
+                       'is_novita'=> $data_row['is_novita'],
+                      'is_vincolante'=> $data_row['is_vincolante'],
+                       'is_online'=> $data_row['is_online'],
+                       'url_img'=> $data_row['url_img'],
+                      'color'=> $data_row['color'],
+                     'pezzi_confezione'=> $data_row['pezzi_confezione'],
+                    'descrizione_agg'=> $data_row['descrizione_agg'],
+                  'sconto'=> $data_row['sconto'],
+                   'created_at'=>$data_row['created_at'],
+                        'updated_at'=>$data_row['updated_at'],
+                'data_scadenza'=> $data_row['data_scadenza']
+                       ];
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    $insert[]=$data_row;
+                    
                     $counter++;
 
                
@@ -412,8 +450,35 @@ class articoloValidator {
                     $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
                     $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
                     $id='';
-                    array_unshift($data_row, $id);
+                    $data_row['id']=$id;
+//                    array_unshift($data_row, $id);
                     fputs($fp, implode($data_row,';')."\n");
+                    /// $insert[]=$data_row;
+                    $insert[]=[ 'id'=> $data_row['id'],
+                      'codice'=> $data_row['codice'],
+                  'id_padre' => $data_row['id_padre'],
+                'codice_alt' => $data_row['codice_alt'],
+               'codice_barre' => $data_row['codice_barre'],
+                 'descrizione' => $data_row['descrizione'],
+                  'provv' => $data_row['provv'],
+                   'unita_misura'=> $data_row['unita_misura'],
+                   'qta_min'=> $data_row['qta_min'],
+                    'iva'=> $data_row['iva'],
+                   'nota'=> $data_row['nota'],
+                    'aspetto_bene'=> $data_row['aspetto_bene'],
+                   'is_kit'=> $data_row['is_kit'],
+                       'is_novita'=> $data_row['is_novita'],
+                      'is_vincolante'=> $data_row['is_vincolante'],
+                       'is_online'=> $data_row['is_online'],
+                       'url_img'=> $data_row['url_img'],
+                      'color'=> $data_row['color'],
+                     'pezzi_confezione'=> $data_row['pezzi_confezione'],
+                    'descrizione_agg'=> $data_row['descrizione_agg'],
+                  'sconto'=> $data_row['sconto'],
+                        'created_at'=>$data_row['created_at'],
+                        'updated_at'=>$data_row['updated_at'],
+                'data_scadenza'=> $data_row['data_scadenza']
+                       ];
 
 
                 }
@@ -455,7 +520,25 @@ class articoloValidator {
         //DB::getPdo()->exec($query);
         //OPPURE -> 
         //DB::connection()->getPdo()->exec($query);
-        $query= $this->writeDb($name_tab,$path);
+//$query= $this->writeDb($name_tab,$path);
+        //DB::table('articolo')->delete();
+        foreach (array_chunk($insert,1000) as $row2){
+            /*
+                        echo "Ok ";
+                //        \App\Artc::insert($row);}
+                foreach ($row2 as $row)
+                     //DB::table('articolo')->updateOrCreate($row); 
+                     $this->articolob->($row); */
+            foreach ($row2 as $row)
+            DB::table('articolo')->where('id',$row['id'])->update($row); 
+       $query = sprintf("INSERT INTO TABLE 'articolo' VALUES '%s'", implode($row,','));
+        echo $query;
+        $row=  implode($row, ',');
+       // DB::connection()->getPdo()->exec($query);
+                            
+        }
+                    
+        
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
@@ -467,9 +550,9 @@ class articoloValidator {
     }
     
     public function getMySQLVersion() { 
-  $output = shell_exec('mysql -V'); 
-  echo $output.'<br>';
-  preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version); 
-  return $version[0]; 
-}
+            $output = shell_exec('mysql -V'); 
+            echo $output.'<br>';
+            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version); 
+             return $version[0]; 
+    }
 }
