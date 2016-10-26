@@ -14,3 +14,4 @@ composer.lock
 /database/migrations/2016_10_26_131347_create_task_table.php
 /database/migrations/2016_10_26_131948_create_tasks_table.php
 /database/migrations/2016_10_26_132639_create_client_table.php
+database/migrations/2014_10_12_000000_create_users_table.php
