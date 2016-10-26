@@ -11,3 +11,6 @@ database/migrations/2016_10_11_104402_Categoria.php
 nbproject/project.properties
 nbproject/project.xml
 composer.lock
+/database/migrations/2016_10_26_131347_create_task_table.php
+/database/migrations/2016_10_26_131948_create_tasks_table.php
+/database/migrations/2016_10_26_132639_create_client_table.php
