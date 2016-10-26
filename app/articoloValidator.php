@@ -609,7 +609,7 @@ class articoloValidator {
         //DB::connection()->getPdo()->exec($query);
 //$query= $this->writeDb($name_tab,$path);
         //DB::table('articolo')->delete();
-        foreach (array_chunk($insert,1000) as $row2){
+  //      foreach (array_chunk($insert,1000) as $row2){
             /*
                         echo "Ok ";
                 //        \App\Artc::insert($row);}
@@ -620,7 +620,7 @@ class articoloValidator {
            // DB::table('articolo')->where('id',$row['id'])->update($row); 
             
            // DB::connection()->getPdo()->exec('truncate articolo');
-           $this->resetDB('articolo');
+        //   $this->resetDB('articolo');
            //$artdelete->forceDelete();
   //          $this->articolob->insert($row2);
       //  $pdo2 =  DB::connection()->getPdo();
@@ -635,9 +635,10 @@ class articoloValidator {
     //    $row=  implode($row, ',');
        // DB::connection()->getPdo()->exec($query);
                             
-        }
-                    
-        
+  //      }
+                   
+                 
+  $this->writeDb($name_tab,$path)
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
