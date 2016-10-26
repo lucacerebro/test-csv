@@ -638,7 +638,7 @@ class articoloValidator {
   //      }
                    
                  
-  $this->writeDb($name_tab,$path)
+  $this->writeDb($name_tab,$path);
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
