@@ -271,7 +271,7 @@ class articoloValidator {
     
     private function writeDb($name_tab,$path) {
         ini_set('mysql.allow_local_infile', 1);
-        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        $query = sprintf("LOAD DATA INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
         DB::connection()->getPdo()->exec($query);
         return 1;
@@ -333,7 +333,7 @@ class articoloValidator {
                         foreach (array_chunk($insert,1013,true) as $row){
                         echo "Ok !<br>";
                 //        \App\Artc::insert($row);}
-                            DB::connection('mysql2')->table('articolo')->insert($row); 
+                            $conn=DB::connection('mysql2')->table('articolo')->insert($row); 
                             
                         }
                     }
