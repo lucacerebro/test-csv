@@ -100,7 +100,7 @@ class ImportazioneCsvController extends Controller
             if(($csv_file->getClientOriginalExtension()) == 'csv'){
                 if($csv_file->isValid()){
                     $validator = $this->art_validator->validate3($csv_file);
-                    $insert=  $this->art_validator->insertDB($csv_name);
+                  //  $insert=  $this->art_validator->insertDB($csv_name);
                         if (!$validator)  {
                         echo '<br>Attenzione: sono presenti errori nel csv';
                     }           
