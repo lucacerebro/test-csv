@@ -270,7 +270,7 @@ class articoloValidator {
     }
     
     private function writeDb($name_tab,$path) {
-        ini_set('mysql.allow_local_infile', 1);
+        //ini_set('mysql.allow_local_infile', 1);
         $query = sprintf("LOAD DATA INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
         DB::connection()->getPdo()->exec($query);
