@@ -62,7 +62,8 @@ return [
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
-	
+			'options' => [ \PDO::MYSQL_ATTR_LOCAL_INFILE => true,
+                                    ],
 		],
             'mysql2' => [
 			'driver'    => 'mysql',
