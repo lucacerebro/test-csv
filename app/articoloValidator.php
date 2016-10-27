@@ -272,11 +272,22 @@ class articoloValidator {
     private function writeDb($name_tab,$path) {
         echo $path.'<br>';
         ini_set('mysql.allow_local_infile', 1);
+        $query = sprintf("LOAD DATA  INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        echo $query;
+        DB::connection()->getPdo()->exec($query);
+        return 1;
+    }
+    
+    private function writeDb2($name_tab,$path) {
+        echo $path.'<br>';
+        ini_set('mysql.allow_local_infile', 1);
         $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
         DB::connection()->getPdo()->exec($query);
         return 1;
     }
+    
+    
     
     public function insertDb($path) {
         //ini_set('mysql.allow_local_infile', 1);
@@ -639,7 +650,7 @@ class articoloValidator {
   //      }
                    
                  
-  $this->writeDb($name_tab,$path);
+  $this->writeDb2($name_tab,$path);
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
