@@ -269,7 +269,7 @@ class articoloValidator {
         
     }
     
-    private function writeDb($name_tab,$path) {
+    private function writeDb2($name_tab,$path) {
         //$path='/var/lib/mysql/bianchi16.csv';
         echo $path.'<br>';
         echo ini_set('mysql.allow_local_infile', 1).'<br>';
@@ -279,7 +279,7 @@ class articoloValidator {
         return 1;
     }
     
-    private function writeDb2($name_tab,$path) {
+    private function writeDb($name_tab,$path) {
         echo $path.'<br>';
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
