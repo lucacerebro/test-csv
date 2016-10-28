@@ -273,7 +273,7 @@ class articoloValidator {
         //$path='/var/lib/mysql/bianchi16.csv';
         echo $path.'<br>';
         echo ini_set('mysql.allow_local_infile', 1).'<br>';
-        $query = sprintf("LOAD DATA  INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        $query = sprintf("LOAD DATA  INFILE '%s'  INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
         DB::connection()->getPdo()->exec($query);
         return 1;
@@ -284,7 +284,7 @@ class articoloValidator {
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
         //ini_set('mysql.allow_local_infile', 1);
-        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        $query = sprintf("LOAD DATA LOCAL INFILE '%s' INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
         DB::connection()->getPdo()->exec($query);
         return 1;
