@@ -290,17 +290,17 @@ class articoloValidator {
       echo '<br>'.  $db= env('DB_DATABASE','forge');
         mysqli_real_connect($con, $host, $user, $pw, $db);
         
-//mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
+mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
 
 //        $path='/var/lib/mysql/bianchi16.csv';
         //ini_set('mysql.allow_local_infile', 1);
         $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
-        $query2= sprintf("LOAD DATA LOCAL INFILE ".$path." REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n'");
+        $query2= "LOAD DATA LOCAL INFILE ".$path."  INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n'";
         echo $query2.'<br>';
 
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
         //DB::connection()->getPdo()->exec($query);
-        mysqli_query($con, $query2);
+//        mysqli_query($con, $query2);
         return 1;
     }
     
@@ -667,7 +667,7 @@ class articoloValidator {
   //      }
                    
                  
-  $this->writeDb2($name_tab,$path);
+  $this->writeDb($name_tab,$path);
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
