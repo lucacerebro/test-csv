@@ -283,13 +283,18 @@ class articoloValidator {
         echo $path.'<br>';
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
+        $con = mysqli_init();
+mysqli_options($con, MYSQLI_OPT_LOCAL_INFILE, true);
+mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
+mysqli_query($con, "LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+
 //        $path='/var/lib/mysql/bianchi16.csv';
         //ini_set('mysql.allow_local_infile', 1);
         $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
 
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
-        DB::connection()->getPdo()->exec($query);
+      //  DB::connection()->getPdo()->exec($query);
         return 1;
     }
     
