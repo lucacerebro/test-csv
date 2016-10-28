@@ -283,7 +283,7 @@ class articoloValidator {
         echo $path.'<br>';
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
-        $db= env('DB_DATABASE', 'forge');
+        $db= env('DB_HOST', 'forge');
         mysqli_real_connect($con, $db, 'slave1', 'beexel12', 'db_sito1');
         
 //mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
