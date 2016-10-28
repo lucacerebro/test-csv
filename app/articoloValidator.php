@@ -291,7 +291,7 @@ mysqli_options($con, MYSQLI_OPT_LOCAL_INFILE, true);
 
 //        $path='/var/lib/mysql/bianchi16.csv';
         //ini_set('mysql.allow_local_infile', 1);
-        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
         echo $query;
 
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
