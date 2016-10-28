@@ -284,9 +284,10 @@ class articoloValidator {
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
         $con = mysqli_init();
+        mysql_options( &mysql, MYSQL_OPT_LOCAL_INFILE, 1 );
 mysqli_options($con, MYSQLI_OPT_LOCAL_INFILE, true);
-mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
-mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
+//mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
+//mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
 
 //        $path='/var/lib/mysql/bianchi16.csv';
         //ini_set('mysql.allow_local_infile', 1);
@@ -294,7 +295,7 @@ mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/impo
         echo $query;
 
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
-      //  DB::connection()->getPdo()->exec($query);
+        DB::connection($con)->getPdo()->exec($query);
         return 1;
     }
     
