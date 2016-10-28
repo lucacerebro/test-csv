@@ -321,11 +321,11 @@ class articoloValidator {
 
 //        $path='/var/lib/mysql/bianchi16.csv';
         //ini_set('mysql.allow_local_infile', 1);
-       // $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         //echo $query;
-$con->query($q);
+        //$con->query($q);
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
-      //  DB::connection()->getPdo()->exec($query);
+        DB::connection()->getPdo()->exec($query);
         return 1;
     }
     
@@ -447,7 +447,8 @@ $con->query($q);
                $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
                $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);
                $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
-               $id='';
+               $id=$arts->id;
+               echo $id.'<br>';
                array_unshift($data_row, $id);
                fputs($fp, implode($data_row,';')."\n");
                //$articoli_validati[]=$data_row;
