@@ -281,6 +281,8 @@ class articoloValidator {
     
     private function writeDb2($name_tab,$path) {
         echo $path.'<br>';
+        $con = mysqli_init();
+        $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
         //ini_set('mysql.allow_local_infile', 1);
         $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
