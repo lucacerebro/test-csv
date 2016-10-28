@@ -248,11 +248,11 @@ class articoloValidator {
       
     public function validate2($csv_file_path){
         echo 'Metodo validate2<br>';
-        $articoli_validati=$this->check_row($csv_file_path);    
+        $this->check_row($csv_file_path);    
         echo 'Inizio Scrittura file ';
         echo date("H:i:s").'<br>';
         $file_name=$csv_file_path->getClientOriginalName();
-        $this->write_file($articoli_validati,$file_name);
+        //$this->write_file($file_name);
 
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
@@ -271,18 +271,18 @@ class articoloValidator {
     
     public function validate3($csv_file_path){
         echo 'Metodo validate3<br>';
-        $articoli_validati=$this->check_row($csv_file_path);    
+        $this->check_row($csv_file_path);    
         echo 'Inizio Scrittura file ';
         echo date("H:i:s").'<br>';
         $file_name=$csv_file_path->getClientOriginalName();
-        $this->write_file($articoli_validati,$file_name);
+        //$this->write_file($file_name);
 
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
        $path=__DIR__.'/../storage/imports/'. $file_name ;
 //     $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
-        $this->resetDB($name_tab);
+        //$this->resetDB($name_tab);
         $this->writeDb($name_tab, $path);
         echo 'Query Ok<br>';
        // echo 'Counter: '.$counter.'<br>';
