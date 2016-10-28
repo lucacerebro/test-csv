@@ -283,20 +283,22 @@ class articoloValidator {
         echo $path.'<br>';
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
+        
         $host=env('DB_HOST','forge');                 
         $dbname = env('DB_DATABASE', 'forge');
         $username= env('DB_USERNAME', 'forge');
         $passwd = env('DB_PASSWORD', '');
         $con->real_connect($host, $username, $passwd, $dbname);
         //mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
-        $con->query("LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
+     echo   $q= sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path) );
+//        $con->query("LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
 //mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
 
 //        $path='/var/lib/mysql/bianchi16.csv';
         //ini_set('mysql.allow_local_infile', 1);
         $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
-
+$con->query($q);
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
       //  DB::connection()->getPdo()->exec($query);
         return 1;
