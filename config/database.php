@@ -64,7 +64,6 @@ return [
 			'prefix'    => '',
 			'strict'    => false,
 			'options' => [ PDO::MYSQL_ATTR_LOCAL_INFILE => 1,
-                         //   PDO::MYSQLI_OPT_LOCAL_INFILE => 1
                                     ],
 		],
             'mysql2' => [
