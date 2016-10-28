@@ -269,6 +269,31 @@ class articoloValidator {
         
     }
     
+    public function validate3($csv_file_path){
+        echo 'Metodo validate3<br>';
+        $articoli_validati=$this->check_row($csv_file_path);    
+        echo 'Inizio Scrittura file ';
+        echo date("H:i:s").'<br>';
+        $file_name=$csv_file_path->getClientOriginalName();
+        $this->write_file($articoli_validati,$file_name);
+
+        echo 'Inizio Scrittura DB ';
+        echo date("H:i:s").'<br>';
+       $path=__DIR__.'/../storage/imports/'. $file_name ;
+//     $path=__DIR__.'/../storage/logs/'. $file_name ;
+        $name_tab='articolo';
+        $this->resetDB($name_tab);
+        $this->writeDb($name_tab, $path);
+        echo 'Query Ok<br>';
+       // echo 'Counter: '.$counter.'<br>';
+        echo 'Fine Scrittura DB ';
+        echo date("H:i:s").'<br>';
+        echo 'Fine';
+        
+    }
+    
+    
+    
     private function writeDb2($name_tab,$path) {
         //$path='/var/lib/mysql/bianchi16.csv';
         echo $path.'<br>';
@@ -398,6 +423,7 @@ $con->query($q);
         echo 'Lettura Header ';        
         echo date("H:i:s").'<br>';
         $counter=0;
+        $fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
         $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $lines = count(file($csv_file_path)) - 1;
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
@@ -413,6 +439,9 @@ $con->query($q);
             fputs($fp_error, $data_row['codice'].' '.$vld->errors()."\n");           
         }
         else {
+            $cod=$data_row['codice'];
+            $arts= Articolo::where('codice',$cod)->first();
+            if(!empty($arts)){
                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
                $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
@@ -420,14 +449,28 @@ $con->query($q);
                $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
                $id='';
                array_unshift($data_row, $id);
-               $articoli_validati[]=$data_row;
+               fputs($fp, implode($data_row,';')."\n");
+               //$articoli_validati[]=$data_row;
             }
+            else{
+                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
+                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
+                $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
+                $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
+                $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
+                $id='';
+                array_unshift($data_row, $id);
+                fputs($fp, implode($data_row,';')."\n");               
+            }
+            } //fine else if($vld->fail)
         }
         else{
             fputs($fp_error, implode($data_rows,';')." {Riga vuota o Numero di campi non corrispondente all'header} \n");
         }    
         }
-        return $articoli_validati;
+        echo memory_get_usage().'<br>';
+        fclose($fp);
+        return 1;
     }
     
     public function write_file($articoli_validati,$file_name){
@@ -445,7 +488,7 @@ $con->query($q);
         echo 'Fine metodo write_file<br>';
     }
 
-         public function validate3($csv_file_path){
+         public function validate4($csv_file_path){
         echo memory_get_usage().'<br>';
         $hostdb='localhost';
         $userdb='root';
