@@ -283,24 +283,18 @@ class articoloValidator {
         echo $path.'<br>';
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
-        $host= env('DB_HOST', 'forge');
-        echo $host.'<br>';
-        echo '<br>'.$user= env('DB_USERNAME','forge');
-     echo '<br>'.   $pw= env('DB_PASSWORD','forge');
-      echo '<br>'.  $db= env('DB_DATABASE','forge');
-        mysqli_real_connect($con, $host, $user, $pw, $db);
-        
-mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
+
+
+$con->mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
+$con->mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/articolo1.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
 
 //        $path='/var/lib/mysql/bianchi16.csv';
         //ini_set('mysql.allow_local_infile', 1);
-        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path));
-        $query2= "LOAD DATA LOCAL INFILE ".$path."  INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n'";
-        echo $query2.'<br>';
+        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        echo $query;
 
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
-        //DB::connection()->getPdo()->exec($query);
-//        mysqli_query($con, $query2);
+      //  DB::connection()->getPdo()->exec($query);
         return 1;
     }
     
@@ -667,7 +661,7 @@ mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/impo
   //      }
                    
                  
-  $this->writeDb($name_tab,$path);
+  $this->writeDb2($name_tab,$path);
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
