@@ -295,7 +295,7 @@ mysqli_options($con, MYSQLI_OPT_LOCAL_INFILE, true);
         echo $query;
 
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
-        DB::connection($con)->getPdo()->exec($query);
+        DB::connection()->getPdo()->exec($query);
         return 1;
     }
     
