@@ -284,9 +284,9 @@ class articoloValidator {
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
         $host=env('DB_HOST','forge');                 
-        $dbname = env('DB_DATABASE', 'forge'),
-        $username= env('DB_USERNAME', 'forge'),
-        $passwd = env('DB_PASSWORD', ''),
+        $dbname = env('DB_DATABASE', 'forge');
+        $username= env('DB_USERNAME', 'forge');
+        $passwd = env('DB_PASSWORD', '');
         $con->real_connect($host, $username, $passwd, $dbname);
         //mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
         $con->query("LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
@@ -665,7 +665,7 @@ class articoloValidator {
   //      }
                    
                  
-  $this->writeDb2($name_tab,$path);
+  $this->writeDb($name_tab,$path);
         echo 'Query Ok<br>';
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
