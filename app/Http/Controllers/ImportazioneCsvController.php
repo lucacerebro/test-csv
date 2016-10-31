@@ -88,7 +88,7 @@ class ImportazioneCsvController extends Controller
         echo 'Start ImportazioneCsvController<br>';
         echo 'time: '.ini_get('max_execution_time').'<br>';
         echo 'size: '.ini_get('upload_max_filesize').'<br>';
-        echo 'init_set(max_execution_time, 500): '. ini_set('max_execution_time', 600).'<br>';
+        echo 'init_set(max_execution_time, 1800): '. ini_set('max_execution_time', 1800).'<br>';
         echo 'init_set(upload_max_filesize, 5): '. ini_set('upload_max_filesize', '5M').'<br>';
         // ini_set('upload_max_filesize', '5M') non funziona, si imposta in .htaccess in /public la riga di comando: php_value upload_max_filesize 5M
         echo 'time: '.ini_get('max_execution_time').'<br>';
