@@ -444,7 +444,7 @@ class articoloValidator {
         else {
             $cod=$data_row['codice'];
             $arts= Articolo::where('codice',$cod)->first();
-            if(!empty($arta)){
+            if(!empty($arts)){
                
                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
