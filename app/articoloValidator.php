@@ -248,9 +248,10 @@ class articoloValidator {
       
     public function validate2($csv_file_path){
         echo 'Metodo validate2<br>';
-        $this->check_row($csv_file_path);    
-        echo 'Inizio Scrittura file ';
+         echo 'Inizio Validazione file CSV ';
         echo date("H:i:s").'<br>';
+        $this->check_row($csv_file_path);    
+    
         $file_name=$csv_file_path->getClientOriginalName();
         //$this->write_file($file_name);
 
@@ -259,7 +260,7 @@ class articoloValidator {
        $path=__DIR__.'/../storage/imports/'. $file_name ;
 //     $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
-        $this->resetDB($name_tab);
+        //$this->resetDB($name_tab);
         $this->writeDb($name_tab, $path);
         echo 'Query Ok<br>';
        // echo 'Counter: '.$counter.'<br>';
@@ -274,7 +275,7 @@ class articoloValidator {
         echo 'Inizio Validazione file CSV ';
         echo date("H:i:s").'<br>';
         
-        $this->check_row($csv_file_path);    
+        $this->check_row3($csv_file_path);    
         
         $file_name=$csv_file_path->getClientOriginalName();
         //$this->write_file($file_name);
@@ -426,6 +427,105 @@ class articoloValidator {
         $provv= Articolo_categoria_provv::all(['id','codice']);
         $scont= Articolo_categoria_sconto::all(['id','codice']);
         $unitamisura = Unita_misura::all(['id','codice']);
+        $articolo= Articolo::all(['id','codice']);
+        $header = fgetcsv($opened_file, 0, ';');
+        $h= count($header);
+        echo 'Lettura Header ';        
+        echo date("H:i:s").'<br>';
+        $counter=0;
+        $fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
+        $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
+        $lines = count(file($csv_file_path)) - 1;
+        $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
+        //$artcs=  Articolo::all(['id','codice']);
+        while(!feof($opened_file))
+        {
+        $data_rows = fgetcsv($opened_file, 0, ';');
+        $n= count($data_rows);
+        if($h==$n)
+            {
+        $data_row = array_combine($header, $data_rows);
+        $vld= $this->validator->make($data_row, $this->rules, $this->messages);
+        if ($vld->fails()){
+            echo $vld->errors().'<br>';
+            fputs($fp_error, $data_row['codice'].' '.$vld->errors()."\n");           
+        }
+        else {
+            $cod=$data_row['codice'];
+            //$arts= Articolo::where('codice',$cod)->first();
+            $art=$articolo->where('codice', $cod)->first();
+            if(!empty($art)){
+               
+               /*
+               $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
+               $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
+               $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
+               $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);
+               $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
+               */
+               $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+
+                $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+
+                $data_row['unita_misura']=$unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+
+                $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
+
+                $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
+             
+                $id=$art->id;
+                
+               
+               array_unshift($data_row, $id);
+               fputs($fp, implode($data_row,';')."\n");
+               
+            }
+            else{
+                /*
+                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
+                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
+                $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
+                $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
+                $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
+                */
+                $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+
+                $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+
+                $data_row['unita_misura']=$unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+
+                $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
+
+                $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
+            
+                $id='';
+                
+                array_unshift($data_row, $id);
+                fputs($fp, implode($data_row,';')."\n");               
+            }
+            } //fine else if($vld->fail)
+        }
+        else{
+            fputs($fp_error, implode($data_rows,';')." {Riga vuota o Numero di campi non corrispondente all'header} \n");
+        }    
+        }
+        echo memory_get_usage().'<br>';
+        fclose($fp);
+        return 1;
+    }
+    
+    public function check_row3($csv_file_path) {
+        
+        ini_set("auto_detect_line_endings", true);
+        $csv_file_name=$csv_file_path->getClientOriginalName();
+        if (($opened_file = fopen($csv_file_path, 'r')) === false) {
+            throw new Exception('File cannot be opened for reading');
+        }
+        $codici_iva=  Codice_iva::all(['id','codice']);
+        $aspettobene= Aspetto_bene::all(['id','codice']);
+        $provv= Articolo_categoria_provv::all(['id','codice']);
+        $scont= Articolo_categoria_sconto::all(['id','codice']);
+        $unitamisura = Unita_misura::all(['id','codice']);
         $header = fgetcsv($opened_file, 0, ';');
         $h= count($header);
         echo 'Lettura Header ';        
@@ -510,6 +610,8 @@ class articoloValidator {
         fclose($fp);
         return 1;
     }
+    
+    
     
     public function write_file($articoli_validati,$file_name){
         $counter=0;
