@@ -485,15 +485,15 @@ class articoloValidator {
                 $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
                 $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
                 */
-                $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+               // $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
 
-                $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+                //$data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
 
-                $data_row['unita_misura']=$unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+                //$data_row['unita_misura']=$unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
 
-                $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
+                //$data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
 
-                $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
+                //$data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
             
                 $id='';
                 
