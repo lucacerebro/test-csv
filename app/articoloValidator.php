@@ -452,7 +452,7 @@ class articoloValidator {
             $cod=$data_row['codice'];
            // $arts= Articolo::where('codice',$cod)->first();
             //if(!empty($arts)){
-                if(1){
+                if(0){
                /*
                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
@@ -470,7 +470,7 @@ class articoloValidator {
 
                 $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
              
-               $id=$arts->id;
+                $id=$arts->id;
                 
                
                array_unshift($data_row, $id);
