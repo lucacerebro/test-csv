@@ -271,14 +271,16 @@ class articoloValidator {
     
     public function validate3($csv_file_path){
         echo 'Metodo validate3<br>';
-        $this->check_row($csv_file_path);    
-        echo 'Inizio Scrittura file ';
+        echo 'Inizio Validazione file CSV ';
         echo date("H:i:s").'<br>';
+        
+        $this->check_row($csv_file_path);    
+        
         $file_name=$csv_file_path->getClientOriginalName();
         //$this->write_file($file_name);
 
         echo 'Inizio Scrittura DB ';
-        echo date("H:i:s").'<br>';
+        echo date("H:i:s").'<br>';       
        $path=__DIR__.'/../storage/imports/'. $file_name ;
 //     $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
@@ -412,7 +414,7 @@ class articoloValidator {
     }
     
     public function check_row($csv_file_path) {
-        $articoli_validati= array();
+        
         ini_set("auto_detect_line_endings", true);
         $csv_file_name=$csv_file_path->getClientOriginalName();
         if (($opened_file = fopen($csv_file_path, 'r')) === false) {
@@ -427,6 +429,7 @@ class articoloValidator {
         $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $lines = count(file($csv_file_path)) - 1;
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
+        $artcs=  Articolo::all(['id','codice']);
         while(!feof($opened_file))
         {
         $data_rows = fgetcsv($opened_file, 0, ';');
@@ -440,20 +443,23 @@ class articoloValidator {
         }
         else {
             $cod=$data_row['codice'];
-            $arts= Articolo::where('codice',$cod)->first();
-            if(!empty($arts)){
+            //$arts= Articolo::where('codice',$cod)->first();
+            echo $art=$artcs->where('codice', $cod)->first();
+             if(!empty($art)){
+               
                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
                $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
                $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);
                $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
-               $id=$arts->id;
-               echo $id.'<br>';
+               $id=$art->id;
+               
                array_unshift($data_row, $id);
                fputs($fp, implode($data_row,';')."\n");
                //$articoli_validati[]=$data_row;
             }
             else{
+                
                 $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);  
                 $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
                 $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
