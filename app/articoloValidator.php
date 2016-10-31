@@ -324,9 +324,9 @@ class articoloValidator {
 
 //        $path='/var/lib/mysql/bianchi16.csv';
         //ini_set('mysql.allow_local_infile', 1);
-        $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+   //     $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         //echo $query;
-        //$con->query($q);
+        $con->query($q);
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
 //        DB::connection()->getPdo()->exec($query);
         return 1;
@@ -450,9 +450,9 @@ class articoloValidator {
         }
         else {
             $cod=$data_row['codice'];
-           // $arts= Articolo::where('codice',$cod)->first();
-            //if(!empty($arts)){
-                if(0){
+            $arts= Articolo::where('codice',$cod)->first();
+            if(!empty($arts)){
+               
                /*
                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
@@ -475,7 +475,7 @@ class articoloValidator {
                
                array_unshift($data_row, $id);
                fputs($fp, implode($data_row,';')."\n");
-               //$articoli_validati[]=$data_row;
+               
             }
             else{
                 /*
@@ -485,15 +485,15 @@ class articoloValidator {
                 $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);  
                 $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);  
                 */
-               // $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
 
-                //$data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
+                $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
 
-                //$data_row['unita_misura']=$unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
+                $data_row['unita_misura']=$unitamisura->where('codice',$data_row['unita_misura'])->first()->id;
 
-                //$data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
+                $data_row['sconto']= $scont->where('codice',$data_row['sconto'])->first()->id;
 
-                //$data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
+                $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
             
                 $id='';
                 
