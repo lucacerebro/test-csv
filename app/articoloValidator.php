@@ -311,7 +311,8 @@ class articoloValidator {
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
         
-        $host=env('DB_HOST','forge');                 
+        echo $host=env('DB_HOST','forge');                 
+        echo '<br>';
         $dbname = env('DB_DATABASE', 'forge');
         $username= env('DB_USERNAME', 'forge');
         $passwd = env('DB_PASSWORD', 'forge');
@@ -325,7 +326,7 @@ class articoloValidator {
         //ini_set('mysql.allow_local_infile', 1);
         $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         //echo $query;
-        $con->query($q);
+        //$con->query($q);
            //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
 //        DB::connection()->getPdo()->exec($query);
         return 1;
@@ -439,7 +440,8 @@ class articoloValidator {
         {
         $data_rows = fgetcsv($opened_file, 0, ';');
         $n= count($data_rows);
-        if($h==$n){
+        if($h==$n)
+            {
         $data_row = array_combine($header, $data_rows);
         $vld= $this->validator->make($data_row, $this->rules, $this->messages);
         if ($vld->fails()){
@@ -448,8 +450,9 @@ class articoloValidator {
         }
         else {
             $cod=$data_row['codice'];
-            $arts= Articolo::where('codice',$cod)->first();
-            if(!empty($arts)){
+           // $arts= Articolo::where('codice',$cod)->first();
+            //if(!empty($arts)){
+                if(1){
                /*
                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
