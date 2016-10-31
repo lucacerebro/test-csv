@@ -314,7 +314,7 @@ class articoloValidator {
         $host=env('DB_HOST','forge');                 
         $dbname = env('DB_DATABASE', 'forge');
         $username= env('DB_USERNAME', 'forge');
-        $passwd = env('DB_PASSWORD', '');
+        $passwd = env('DB_PASSWORD', 'forge');
         $con->real_connect($host, $username, $passwd, $dbname);
         //mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
         echo   $q= sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path) );
@@ -429,7 +429,7 @@ class articoloValidator {
         $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $lines = count(file($csv_file_path)) - 1;
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
-        $artcs=  Articolo::all(['id','codice']);
+        //$artcs=  Articolo::all(['id','codice']);
         while(!feof($opened_file))
         {
         $data_rows = fgetcsv($opened_file, 0, ';');
@@ -443,16 +443,15 @@ class articoloValidator {
         }
         else {
             $cod=$data_row['codice'];
-            //$arts= Articolo::where('codice',$cod)->first();
-            echo $art=$artcs->where('codice', $cod)->first();
-             if(!empty($art)){
+            $arts= Articolo::where('codice',$cod)->first();
+            if(!empty($arta)){
                
                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
                $data_row['unita_misura']=  $this->articolob->get_misura_id($data_row['unita_misura']);
                $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);
                $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
-               $id=$art->id;
+               $id=$arts->id;
                
                array_unshift($data_row, $id);
                fputs($fp, implode($data_row,';')."\n");
