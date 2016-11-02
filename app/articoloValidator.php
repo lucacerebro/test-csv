@@ -250,10 +250,10 @@ class articoloValidator {
         echo 'Metodo validate2<br>';
          echo 'Inizio Validazione file CSV ';
         echo date("H:i:s").'<br>';
-        $this->check_row($csv_file_path);    
+        $articoli[]=$this->check_row($csv_file_path);    
     
         $file_name=$csv_file_path->getClientOriginalName();
-        //$this->write_file($file_name);
+        $this->write_file($articoli,$file_name);
 
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
@@ -433,7 +433,7 @@ class articoloValidator {
         echo 'Lettura Header ';        
         echo date("H:i:s").'<br>';
         $counter=0;
-        $fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
+        //$fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
         $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $lines = count(file($csv_file_path)) - 1;
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
@@ -476,8 +476,8 @@ class articoloValidator {
                 $id=$art->id;
                 
                
-               array_unshift($data_row, $id);
-               fputs($fp, implode($data_row,';')."\n");
+               $articoli[]=array_unshift($data_row, $id);
+               //fputs($fp, implode($data_row,';')."\n");
                
             }
             else{
@@ -500,8 +500,8 @@ class articoloValidator {
             
                 $id='';
                 
-                array_unshift($data_row, $id);
-                fputs($fp, implode($data_row,';')."\n");               
+                $articoli[]=array_unshift($data_row, $id);
+                //fputs($fp, implode($data_row,';')."\n");               
             }
             } //fine else if($vld->fail)
         }
@@ -510,8 +510,8 @@ class articoloValidator {
         }    
         }
         echo memory_get_usage().'<br>';
-        fclose($fp);
-        return 1;
+        //fclose($fp);
+        return $articoli;
     }
     
     public function check_row3($csv_file_path) {
@@ -532,7 +532,7 @@ class articoloValidator {
         echo date("H:i:s").'<br>';
         $counter=0;
         $fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
-        $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
+        //$fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $lines = count(file($csv_file_path)) - 1;
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
         //$artcs=  Articolo::all(['id','codice']);
@@ -546,7 +546,7 @@ class articoloValidator {
         $vld= $this->validator->make($data_row, $this->rules, $this->messages);
         if ($vld->fails()){
             echo $vld->errors().'<br>';
-            fputs($fp_error, $data_row['codice'].' '.$vld->errors()."\n");           
+            //fputs($fp_error, $data_row['codice'].' '.$vld->errors()."\n");           
         }
         else {
             $cod=$data_row['codice'];
@@ -603,7 +603,8 @@ class articoloValidator {
             } //fine else if($vld->fail)
         }
         else{
-            fputs($fp_error, implode($data_rows,';')." {Riga vuota o Numero di campi non corrispondente all'header} \n");
+            echo 'scrittura file di errore';
+            //fputs($fp_error, implode($data_rows,';')." {Riga vuota o Numero di campi non corrispondente all'header} \n");
         }    
         }
         echo memory_get_usage().'<br>';
