@@ -250,10 +250,10 @@ class articoloValidator {
         echo 'Metodo validate2<br>';
          echo 'Inizio Validazione file CSV ';
         echo date("H:i:s").'<br>';
-        $articoli[]=$this->check_row($csv_file_path);    
+        $this->check_row($csv_file_path);    
     
         $file_name=$csv_file_path->getClientOriginalName();
-        $this->write_file($articoli,$file_name);
+        //$this->write_file($articoli,$file_name);
 
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
@@ -433,7 +433,7 @@ class articoloValidator {
         echo 'Lettura Header ';        
         echo date("H:i:s").'<br>';
         $counter=0;
-        //$fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
+        $fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
         $fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $lines = count(file($csv_file_path)) - 1;
         $this->csv_import->create(['original_filename'=>$csv_file_name,'status'=>'importato','row_count'=> $lines]);
@@ -453,9 +453,11 @@ class articoloValidator {
         else {
             $cod=$data_row['codice'];
             //$arts= Articolo::where('codice',$cod)->first();
+            //$art=$articolo->where('codice', $cod)->first();
             $art=$articolo->where('codice', $cod)->first();
+            
             if(!empty($art)){
-               
+             
                /*
                $data_row['iva']= $this->articolob->get_iva_id($data_row['iva']);
                $data_row['aspetto_bene']=  $this->articolob->get_aspetto_id($data_row['aspetto_bene']);
@@ -475,9 +477,10 @@ class articoloValidator {
              
                 $id=$art->id;
                 
+               array_unshift($data_row, $id);
                
-               $articoli[]=array_unshift($data_row, $id);
-               //fputs($fp, implode($data_row,';')."\n");
+               //$articoli[]=array_unshift($data_row, $id);
+               fputs($fp, implode($data_row,';')."\n");
                
             }
             else{
@@ -500,8 +503,10 @@ class articoloValidator {
             
                 $id='';
                 
-                $articoli[]=array_unshift($data_row, $id);
-                //fputs($fp, implode($data_row,';')."\n");               
+                array_unshift($data_row, $id);
+               
+                //$articoli[]=array_unshift($data_row, $id);
+                fputs($fp, implode($data_row,';')."\n");               
             }
             } //fine else if($vld->fail)
         }
@@ -510,8 +515,9 @@ class articoloValidator {
         }    
         }
         echo memory_get_usage().'<br>';
-        //fclose($fp);
-        return $articoli;
+        fclose($fp);
+        return 1;
+        //return $articoli;
     }
     
     public function check_row3($csv_file_path) {
