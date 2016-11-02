@@ -618,12 +618,14 @@ class articoloValidator {
         $counter=0;
         $fp = fopen(__DIR__.'/../storage/imports/'.$file_name, 'w');
 //      $fp = fopen(__DIR__.'/../storage/logs/'.$file_name, 'w');
+        echo 'Scrittura su file: '.date("H:i:s").'<br>';
         foreach ($articoli_validati as $fields) {
             //scrive sul file i ogni campo di ogni riga delimitandoli con ';'
             fputs($fp, implode($fields,';')."\n");
             $counter++;
         }
         fclose($fp);
+        echo 'Fine Scrittura su file: '.date("H:i:s").'<br>';
         $this->csv_import->create(['original_filename'=>$file_name,'status'=>'processato','row_count'=> $counter]);
         echo 'Counter: '.$counter.'<br>';
         echo 'Fine metodo write_file<br>';
