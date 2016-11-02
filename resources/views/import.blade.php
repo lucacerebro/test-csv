@@ -46,7 +46,7 @@
 		</form>
                     
                 <form style="float: left" action="{{ URL::to('import_csv2') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
-		<h4> Cancella/Scrivi DB </h4>
+		<h4> Aggiorna DB Vers.1 </h4>
                 <input type="file" name="import_csv" value=" {{ csrf_token() }}" >
 		<button class="btn btn-primary">Validazione File</button>
 		</form>
@@ -67,6 +67,9 @@
 		<a href="{{ URL::to('downloadExcel/csv') }}"><button class="btn btn-success">Download CSV</button></a>
                 <span style="margin-left: 10px;">
                 <a href="{{ URL::to('import') }}"><button class="btn btn-success" >Home</button></a>
+                </span>
+                <span style="margin-left: 10px;">
+                <a href="{{ URL::to('dropDb') }}"><button class="btn btn-success" >Drop DB</button></a>
                 </span>
                 </p>
                 
