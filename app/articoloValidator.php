@@ -517,7 +517,8 @@ class articoloValidator {
     public function check_row3($csv_file_path) {
         
         ini_set("auto_detect_line_endings", true);
-        $csv_file_name=$csv_file_path->getClientOriginalName();
+        echo $csv_file_name=$csv_file_path->getClientOriginalName();
+        echo '   xxx <br> '.$csv_file_path.'<br>';
         if (($opened_file = fopen($csv_file_path, 'r')) === false) {
             throw new Exception('File cannot be opened for reading');
         }
@@ -571,7 +572,7 @@ class articoloValidator {
                 $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
              
                 $id=$arts->id;
-                
+                echo 'YES '.$cod.'<br>';
                
                array_unshift($data_row, $id);
                fputs($fp, implode($data_row,';')."\n");
@@ -596,7 +597,7 @@ class articoloValidator {
                 $data_row['provv']= $provv->where('codice',$data_row['provv'])->first()->id;
             
                 $id='';
-                
+                 echo 'NO '.$cod.'<br>';
                 array_unshift($data_row, $id);
                 fputs($fp, implode($data_row,';')."\n");               
             }
