@@ -428,6 +428,9 @@ class articoloValidator {
         $scont= Articolo_categoria_sconto::all(['id','codice']);
         $unitamisura = Unita_misura::all(['id','codice']);
         $articolo= Articolo::all(['id','codice']);
+        $array_articolo=$articolo->toArray();
+        
+        echo memory_get_usage().'<br>';
         $header = fgetcsv($opened_file, 0, ';');
         $h= count($header);
         echo 'Lettura Header ';        
@@ -557,7 +560,8 @@ class articoloValidator {
         }
         else {
             $cod=$data_row['codice'];
-            $arts= Articolo::where('codice',$cod)->first();
+                     DB::connection()->disableQueryLog();
+            $arts= DB::table('articolo')->where('codice',$cod)->first();
             if(!empty($arts)){
                
                /*
