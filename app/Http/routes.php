@@ -41,7 +41,7 @@ Route::get('show','ImportazioneCsvController@show');
 
 Route::get('showone/{id}', 'ImportazioneCsvController@showOne');
 
-Route::get('dropDb','ImportazioneCsvController@dropDb');
+Route::get('dropTable/{tablename}','ImportazioneCsvController@dropTable');
 
 Route::get('downloadExcel/{type}', 'ImportazioneCsvController@downloadExcel');
 

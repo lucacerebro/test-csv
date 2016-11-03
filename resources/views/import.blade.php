@@ -75,7 +75,10 @@
                 <a href="{{ URL::to('import') }}"><button class="btn btn-success" >Home</button></a>
                 </span>
                 <span style="margin-left: 10px;">
-                <a href="{{ URL::to('dropDb') }}"><button class="btn btn-success" >Drop DB</button></a>
+                <a href="{{ URL::to('dropTable/articolo') }}"><button class="btn btn-success" >Drop Table articolo</button></a>
+                </span>
+                <span style="margin-left: 10px;">
+                <a href="{{ URL::to('dropTable/csv_importati') }}"><button class="btn btn-success" >Drop Table csv_importati</button></a>
                 </span>
                 </p>
                 

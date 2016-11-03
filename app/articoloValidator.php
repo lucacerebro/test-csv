@@ -434,9 +434,9 @@ class articoloValidator {
     //}
       
     public function resetDB($name_tab) {
-          $pdo =  DB::connection()->getPdo();
+        $pdo =  DB::connection()->getPdo();
         $pdo->exec('truncate articolo');
-//        DB::table($name_tab)->delete();
+//      DB::table($name_tab)->delete();
         echo 'tabella '.$name_tab.' svuotata<br>';
         return 1;
     }

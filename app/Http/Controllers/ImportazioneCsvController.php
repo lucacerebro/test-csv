@@ -147,11 +147,12 @@ class ImportazioneCsvController extends Controller
 	})->download($type);
     }
     
-    public function dropDb() {
+    public function dropTable($nametable) {
         $pdo =  DB::connection()->getPdo();
-        $pdo->exec('truncate articolo');
+        $query='truncate '.$nametable;
+        $pdo->exec($query);
 //        DB::table($name_tab)->delete();
-        echo 'tabella articolo svuotata<br>';
+        echo 'tabella'.$nametable.' svuotata<br>';
         return 1;
     }       
             
