@@ -60,7 +60,7 @@
 		<h4> Aggiorna DB Vers.3 </h4>
                 <input type="file" name="import_csv" value=" {{ csrf_token() }}" >
 		<button class="btn btn-primary">Validazione File</button>
-                <h5>Load Data Local Infile</h5>
+                <h5>Load Data Infile</h5>
 		</form>    
                 
                 </div>

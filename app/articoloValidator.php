@@ -252,7 +252,7 @@ class articoloValidator {
         echo 'Metodo validate2<br>';
         echo 'Inizio Validazione file CSV ';
         echo date("H:i:s").'<br>';
-        $this->check_row($csv_file_path);    
+        $this->check_row3($csv_file_path);    
     
         $file_name=$csv_file_path->getClientOriginalName();
         //$this->write_file($articoli,$file_name);
@@ -263,7 +263,7 @@ class articoloValidator {
 //      $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
         //$this->resetDB($name_tab);
-        $this->writeDb($name_tab, $path);
+        $this->writeDb2($name_tab, $path);
         echo 'Query Ok<br>';
         // echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
@@ -288,7 +288,7 @@ class articoloValidator {
 //      $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
         //$this->resetDB($name_tab);
-        $this->writeDb($name_tab, $path);
+        $this->writeDb3($name_tab, $path);
         echo 'Query Ok<br>';
         // echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
@@ -299,17 +299,42 @@ class articoloValidator {
     
     
     
-    private function writeDb2($name_tab,$path) {
+    private function writeDb($name_tab,$path) {
         //$path='/var/lib/mysql/bianchi16.csv';
         echo $path.'<br>';
         echo ini_set('mysql.allow_local_infile', 1).'<br>';
-        $query = sprintf("LOAD DATA  INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        $query = sprintf("LOAD DATA INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
         echo $query;
         DB::connection()->getPdo()->exec($query);
         return 1;
     }
     
-    private function writeDb($name_tab,$path) {
+    private function writeDb2($name_tab,$path) {
+        echo $path.'<br>';
+        $con = mysqli_init();
+        $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
+        
+        echo $host=env('DB_HOST','forge');                 
+        echo '<br>';
+        $dbname = env('DB_DATABASE', 'forge');
+        $username= env('DB_USERNAME', 'forge');
+        $passwd = env('DB_PASSWORD', 'forge');
+        $con->real_connect($host, $username, $passwd, $dbname);
+        //mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
+        echo   $q= sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path) );
+//        $con->query("LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
+//mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
+
+//        $path='/var/lib/mysql/bianchi16.csv';
+        //ini_set('mysql.allow_local_infile', 1);
+   //     $query = sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path),$name_tab);
+        //echo $query;
+        $con->query($q);
+           //     $f=  fopen(__DIR__.'/../storage/imports/'.$path, 'r');
+//        DB::connection()->getPdo()->exec($query);
+        return 1;
+    }
+    private function writeDb3($name_tab,$path) {
         echo $path.'<br>';
         $con = mysqli_init();
         $con->options(MYSQLI_OPT_LOCAL_INFILE, true);
@@ -334,7 +359,6 @@ class articoloValidator {
 //        DB::connection()->getPdo()->exec($query);
         return 1;
     }
-    
     
     
     public function insertDb($path) {
