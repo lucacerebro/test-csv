@@ -37,26 +37,32 @@
     
     <div class="container">
                 <h3>Caricamento File CSV Articoli (in tabella articolo)</h3>
-                <div style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px; width: auto">
+                <div style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 20px; width: auto; height: auto">
                         
                 <form style="float: left " action="{{ URL::to('import_csv') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
                 <h4> Aggiorna DB Vers.1 </h4>
+               
+                    
                 <input type="file" name="import_csv" value=" {{ csrf_token() }}" >
 		<button class="btn btn-primary">Validazione File</button>
-		</form>
+                <h5>Utilizzo Model</h5>
+                </form>
                     
                 <form style="float: left" action="{{ URL::to('import_csv2') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
-		<h4> Aggiorna DB Vers.1 </h4>
-                <input type="file" name="import_csv" value=" {{ csrf_token() }}" >
-		<button class="btn btn-primary">Validazione File</button>
-		</form>
-                    
-                <form action="{{ URL::to('import_csv3') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
 		<h4> Aggiorna DB Vers.2 </h4>
                 <input type="file" name="import_csv" value=" {{ csrf_token() }}" >
 		<button class="btn btn-primary">Validazione File</button>
+                <h5>Load Data Local Infile</h5>
+		</form>             
+                
+                
+                <form style="float: none" action="{{ URL::to('import_csv3') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+		<h4> Aggiorna DB Vers.3 </h4>
+                <input type="file" name="import_csv" value=" {{ csrf_token() }}" >
+		<button class="btn btn-primary">Validazione File</button>
+                <h5>Load Data Local Infile</h5>
 		</form>    
-
+                
                 </div>
 
                 <p style="margin-top: 15px;">
@@ -75,7 +81,7 @@
                 
     </div>
     <div>
-        echo '<?php phpinfo(); ?>'
+        <?php phpinfo(); ?>
 
         
     </div>

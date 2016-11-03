@@ -70,7 +70,7 @@ class articoloValidator {
         $provv= Articolo_categoria_provv::all(['id','codice']);
         $scont= Articolo_categoria_sconto::all(['id','codice']);
         $unitamisura = Unita_misura::all(['id','codice']);
-        $artcs=  Articolo::all(['id','codice']);
+        //$artcs=  Articolo::all(['id','codice']);
         echo memory_get_usage().'<br>';
 
         ini_set("auto_detect_line_endings", true);
@@ -189,6 +189,8 @@ class articoloValidator {
                
             }
             else {
+                // utilizzando firstOrNew questa parte di codice non verra mai esegutita
+                
                 echo 'NO<br>';
                 $id='';
                 $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
@@ -248,7 +250,7 @@ class articoloValidator {
       
     public function validate2($csv_file_path){
         echo 'Metodo validate2<br>';
-         echo 'Inizio Validazione file CSV ';
+        echo 'Inizio Validazione file CSV ';
         echo date("H:i:s").'<br>';
         $this->check_row($csv_file_path);    
     
@@ -257,13 +259,13 @@ class articoloValidator {
 
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';
-       $path=__DIR__.'/../storage/imports/'. $file_name ;
-//     $path=__DIR__.'/../storage/logs/'. $file_name ;
+        $path=__DIR__.'/../storage/imports/'. $file_name ;
+//      $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
         //$this->resetDB($name_tab);
         $this->writeDb($name_tab, $path);
         echo 'Query Ok<br>';
-       // echo 'Counter: '.$counter.'<br>';
+        // echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
         echo date("H:i:s").'<br>';
         echo 'Fine';
@@ -282,13 +284,13 @@ class articoloValidator {
 
         echo 'Inizio Scrittura DB ';
         echo date("H:i:s").'<br>';       
-       $path=__DIR__.'/../storage/imports/'. $file_name ;
-//     $path=__DIR__.'/../storage/logs/'. $file_name ;
+        $path=__DIR__.'/../storage/imports/'. $file_name ;
+//      $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
         //$this->resetDB($name_tab);
         $this->writeDb($name_tab, $path);
         echo 'Query Ok<br>';
-       // echo 'Counter: '.$counter.'<br>';
+        // echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
         echo date("H:i:s").'<br>';
         echo 'Fine';
@@ -319,7 +321,7 @@ class articoloValidator {
         $passwd = env('DB_PASSWORD', 'forge');
         $con->real_connect($host, $username, $passwd, $dbname);
         //mysqli_real_connect($con, '192.168.0.19', 'slave1', 'beexel12', 'db_sito1');
-        echo   $q= sprintf("LOAD DATA LOCAL INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path) );
+        echo   $q= sprintf("LOAD DATA  INFILE '%s' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ", addslashes($path) );
 //        $con->query("LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
 //mysqli_query($con, "LOAD DATA LOCAL INFILE '/var/www/testcsv/app/../storage/imports/bianchi16.csv' REPLACE INTO TABLE  articolo FIELDS TERMINATED BY ';' LINES TERMINATED BY '\\n' ");
 
@@ -560,8 +562,7 @@ class articoloValidator {
         }
         else {
             $cod=$data_row['codice'];
-                     DB::connection()->disableQueryLog();
-            $arts= DB::table('articolo')->where('codice',$cod)->first();
+            $arts= Articolo::where('codice',$cod)->first();
             if(!empty($arts)){
                
                /*
