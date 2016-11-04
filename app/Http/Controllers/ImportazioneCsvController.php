@@ -155,5 +155,11 @@ class ImportazioneCsvController extends Controller
         echo 'tabella'.$nametable.' svuotata<br>';
         return 1;
     }       
-            
+    
+    public function readLocalFile($filename){
+    
+        $var=  file_get_contents(__DIR__.'/../../../storage/imports/'.$filename);
+        echo $var;
+      
+    }
 }

@@ -45,3 +45,5 @@ Route::get('dropTable/{tablename}','ImportazioneCsvController@dropTable');
 
 Route::get('downloadExcel/{type}', 'ImportazioneCsvController@downloadExcel');
 
+Route::get('readlocalfile/{filename}','ImportazioneCsvController@readLocalFile');
+

@@ -80,6 +80,9 @@
                 <span style="margin-left: 10px;">
                 <a href="{{ URL::to('dropTable/csv_importati') }}"><button class="btn btn-success" >Drop Table csv_importati</button></a>
                 </span>
+                <span style="margin-left: 10px;">
+                <a href="{{ URL::to('readlocalfile/report.txt') }}"><button class="btn btn-success" >Read Report</button></a>
+                </span>
                 </p>
                 
     </div>

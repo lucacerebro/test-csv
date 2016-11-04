@@ -288,8 +288,12 @@ class articoloValidator {
 //      $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
         //$this->resetDB($name_tab);
+        $fptest = fopen(__DIR__.'/../storage/imports/report.txt', 'a');
+        fputs($fptest,"Inizio scrittura DB ".date("H:i:s")."\n");
         $this->writeDb3($name_tab, $path);
+        fputs($fptest,"Fine scrittura DB ".date("H:i:s")."\n\n");
         echo 'Query Ok<br>';
+        fclose($fptest);
         // echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
         echo date("H:i:s").'<br>';
@@ -386,29 +390,29 @@ class articoloValidator {
 
                         $insert[] = [
                                 'id'=> $value['id'],
-                  'codice'=> $value['codice'],
-                  'id_padre' => $value['id_padre'],
-                'codice_alt' => $value['codice_alt'],
-               'codice_barre' => $value['codice_barre'],
-                 'descrizione' => $value['descrizione'],
-                  'provv' => $value['provv'],
-                   'unita_misura'=> $value['unita_misura'],
-                   'qta_min'=> $value['qta_min'],
-                    'iva'=> $value['iva'],
-                   'nota'=> $value['nota'],
-                    'aspetto_bene'=> $value['aspetto_bene'],
-                   'is_kit'=> $value['is_kit'],
-                       'is_novita'=> $value['is_novita'],
-                      'is_vincolante'=> $value['is_vincolante'],
-                       'is_online'=> $value['is_online'],
-                       'url_img'=> $value['url_img'],
-                      'color'=> $value['color'],
-                     'pezzi_confezione'=> $value['pezzi_confezione'],
-                    'descrizione_agg'=> $value['descrizione_agg'],
-                  'sconto'=> $value['sconto'],
-                   'created_at'=>$value['created_at'],
-                        'updated_at'=>$value['updated_at'],
-                'data_scadenza'=> $value['data_scadenza']
+                                'codice'=> $value['codice'],
+                                'id_padre' => $value['id_padre'],
+                                'codice_alt' => $value['codice_alt'],
+                                'codice_barre' => $value['codice_barre'],
+                                'descrizione' => $value['descrizione'],
+                                'provv' => $value['provv'],
+                                'unita_misura'=> $value['unita_misura'],
+                                'qta_min'=> $value['qta_min'],
+                                'iva'=> $value['iva'],
+                                'nota'=> $value['nota'],
+                                'aspetto_bene'=> $value['aspetto_bene'],
+                                'is_kit'=> $value['is_kit'],
+                                'is_novita'=> $value['is_novita'],
+                                'is_vincolante'=> $value['is_vincolante'],
+                                'is_online'=> $value['is_online'],
+                                'url_img'=> $value['url_img'],
+                                'color'=> $value['color'],
+                                'pezzi_confezione'=> $value['pezzi_confezione'],
+                                'descrizione_agg'=> $value['descrizione_agg'],
+                                'sconto'=> $value['sconto'],
+                                'created_at'=>$value['created_at'],
+                                'updated_at'=>$value['updated_at'],
+                                'data_scadenza'=> $value['data_scadenza']
                            
         ];}
         }
@@ -553,7 +557,7 @@ class articoloValidator {
         
         ini_set("auto_detect_line_endings", true);
         echo $csv_file_name=$csv_file_path->getClientOriginalName();
-        echo '   xxx <br> '.$csv_file_path.'<br>';
+        echo '   xxx <br> '.$csv_file_path."<br>";
         if (($opened_file = fopen($csv_file_path, 'r')) === false) {
             throw new Exception('File cannot be opened for reading');
         }
@@ -564,9 +568,14 @@ class articoloValidator {
         $unitamisura = Unita_misura::all(['id','codice']);
         $header = fgetcsv($opened_file, 0, ';');
         $h= count($header);
+        
+        $fptest = fopen(__DIR__.'/../storage/imports/report.txt', 'w');
         echo 'Lettura Header ';        
-        echo date("H:i:s").'<br>';
+        echo $var=date("H:i:s");
+        echo "<br>";
+        fputs($fptest,"CheckRow3 ".$csv_file_name." -> ".$var."\n");
         $counter=0;
+        
         $fp = fopen(__DIR__.'/../storage/imports/'.$csv_file_name, 'w');
         //$fp_error = fopen(__DIR__.'/../storage/logs/articoli_non_validati.log', 'w');
         $lines = count(file($csv_file_path)) - 1;
@@ -611,7 +620,8 @@ class articoloValidator {
                
                array_unshift($data_row, $id);
                fputs($fp, implode($data_row,';')."\n");
-               
+               fputs($fptest,$data_row['codice'].";");
+               $counter++;
             }
             else{
                 /*
@@ -643,8 +653,11 @@ class articoloValidator {
             //fputs($fp_error, implode($data_rows,';')." {Riga vuota o Numero di campi non corrispondente all'header} \n");
         }    
         }
+        fputs($fptest,"\nFine validation: ".date("H:i:s")."\n");
+        fputs($fptest, "Righe validate: ".$counter."\n");
         echo memory_get_usage().'<br>';
         fclose($fp);
+        fclose($fptest);
         return 1;
     }
     
