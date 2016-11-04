@@ -554,7 +554,7 @@ class articoloValidator {
     }
     
     public function check_row3($csv_file_path) {
-        
+        DB::connection()->disableQueryLog();
         ini_set("auto_detect_line_endings", true);
         echo $csv_file_name=$csv_file_path->getClientOriginalName();
         echo '   xxx <br> '.$csv_file_path."<br>";
