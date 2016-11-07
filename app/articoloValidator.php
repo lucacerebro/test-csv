@@ -263,8 +263,12 @@ class articoloValidator {
 //      $path=__DIR__.'/../storage/logs/'. $file_name ;
         $name_tab='articolo';
         //$this->resetDB($name_tab);
+        $fptest = fopen(__DIR__.'/../storage/imports/report.txt', 'a');
+        fputs($fptest,"Inizio scrittura DB ".date("H:i:s")."\n");
         $this->writeDb2($name_tab, $path);
         echo 'Query Ok<br>';
+        fputs($fptest,"Fine scrittura DB ".date("H:i:s")."\n\n");
+        fclose($fptest);
         // echo 'Counter: '.$counter.'<br>';
         echo 'Fine Scrittura DB ';
         echo date("H:i:s").'<br>';
@@ -605,7 +609,7 @@ class articoloValidator {
                $data_row['sconto']= $this->articolob->get_cat_sconto_id($data_row['sconto']);
                $data_row['provv']= $this->articolob->get_cat_provv_id($data_row['provv']);
                */
-               $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
+                $data_row['iva']=$codici_iva->where('codice',$data_row['iva'])->first()->id;
 
                 $data_row['aspetto_bene']= $aspettobene->where('codice',$data_row['aspetto_bene'])->first()->id;
 
