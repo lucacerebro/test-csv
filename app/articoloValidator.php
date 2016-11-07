@@ -273,6 +273,7 @@ class articoloValidator {
         echo 'Fine Scrittura DB ';
         echo date("H:i:s").'<br>';
         echo 'Fine';
+        return 1;
         
     }
     
@@ -302,6 +303,7 @@ class articoloValidator {
         echo 'Fine Scrittura DB ';
         echo date("H:i:s").'<br>';
         echo 'Fine';
+        return 1;
         
     }
     
