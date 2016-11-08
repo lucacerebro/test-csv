@@ -10,7 +10,7 @@ use Redirect;
 use App\articoloValidator;
 use App\Articolo;
 use DB;
-//use Excel;
+use Excel;
 
 class ImportazioneCsvController extends Controller
 {
@@ -145,6 +145,7 @@ class ImportazioneCsvController extends Controller
 		$sheet->fromArray($data);
             });
 	})->download($type);
+        
     }
     
     public function dropTable($nametable) {
