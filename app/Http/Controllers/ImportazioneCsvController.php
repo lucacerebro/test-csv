@@ -145,7 +145,6 @@ class ImportazioneCsvController extends Controller
 		$sheet->fromArray($data);
             });
 	})->download($type);
-        echo '<br>Download completato';
         
     }
     
